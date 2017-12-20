@@ -12,7 +12,7 @@ import java.util.List;
 public interface BookRepository extends CrudRepository<Book, Long>
 {
 
-    List<Book> findByIsbn(String isbn);
+    List<Book> findByIsbn10(String isbn10);
 
     List<Book> findAll();
 }

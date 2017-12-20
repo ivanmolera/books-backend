@@ -34,9 +34,9 @@ public class BookController
     }
 
     @GetMapping
-    public List<BookDTO> findBooks(@RequestParam String isbn)
+    public List<BookDTO> findBooks(@RequestParam String isbn10)
         throws EntityNotFoundException
     {
-        return BookMapper.makeBookDTOList(bookService.find(isbn));
+        return BookMapper.makeBookDTOList(bookService.find(isbn10));
     }
 }

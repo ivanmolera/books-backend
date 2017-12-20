@@ -11,7 +11,7 @@ public class BookMapper
 {
     public static Book makeBookDO(BookDTO bookDTO)
     {
-        return new Book(bookDTO.getIsbn(), bookDTO.getTitle());
+        return new Book(bookDTO.getIsbn10(), bookDTO.getIsbn13(), bookDTO.getTitle(), bookDTO.getAverageRating());
     }
 
 
@@ -19,8 +19,10 @@ public class BookMapper
     {
         BookDTO.BookDTOBuilder bookDTOBuilder = BookDTO.newBuilder()
             .setBookId(book.getBookId())
-            .setIsbn(book.getIsbn())
-            .setTitle(book.getTitle());
+            .setIsbn10(book.getIsbn10())
+            .setIsbn13(book.getIsbn13())
+            .setTitle(book.getTitle())
+            .setAverageRating(book.getAverageRating());
 
         return bookDTOBuilder.createBookDTO();
     }

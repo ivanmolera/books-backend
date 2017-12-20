@@ -12,22 +12,28 @@ public class BookDTO
     @JsonIgnore
     private Long bookId;
 
-    @NotNull(message = "ISBN can not be null!")
-    private String isbn;
+    @NotNull(message = "ISBN-10 can not be null!")
+    private String isbn10;
+
+    private String isbn13;
 
     @NotNull(message = "Title type can not be null!")
     private String title;
+
+    private Float averageRating;
 
     private BookDTO()
     {
     }
 
 
-    public BookDTO(Long bookId, String isbn, String title)
+    public BookDTO(Long bookId, String isbn10, String isbn13, String title, Float averageRating)
     {
         this.bookId = bookId;
-        this.isbn = isbn;
+        this.isbn10 = isbn10;
+        this.isbn13 = isbn13;
         this.title = title;
+        this.averageRating = averageRating;
     }
 
 
@@ -44,16 +50,22 @@ public class BookDTO
     }
 
     @JsonProperty
-    public String getIsbn() { return isbn; }
+    public String getIsbn10() { return isbn10; }
+
+    public String getIsbn13() { return isbn13; }
 
     public String getTitle() { return title; }
+
+    public Float getAverageRating() { return averageRating; }
 
 
     public static class BookDTOBuilder
     {
         private Long bookId;
-        private String isbn;
+        private String isbn10;
+        private String isbn13;
         private String title;
+        private Float averageRating;
 
 
         public BookDTOBuilder setBookId(Long bookId)
@@ -63,9 +75,16 @@ public class BookDTO
         }
 
 
-        public BookDTOBuilder setIsbn(String isbn)
+        public BookDTOBuilder setIsbn10(String isbn10)
         {
-            this.isbn = isbn;
+            this.isbn10 = isbn10;
+            return this;
+        }
+
+
+        public BookDTOBuilder setIsbn13(String isbn13)
+        {
+            this.isbn13 = isbn13;
             return this;
         }
 
@@ -77,9 +96,16 @@ public class BookDTO
         }
 
 
+        public BookDTOBuilder setAverageRating(Float averageRating)
+        {
+            this.averageRating = averageRating;
+            return this;
+        }
+
+
         public BookDTO createBookDTO()
         {
-            return new BookDTO(bookId, isbn, title);
+            return new BookDTO(bookId, isbn10, isbn13, title, averageRating);
         }
 
     }

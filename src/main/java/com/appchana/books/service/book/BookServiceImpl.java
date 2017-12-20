@@ -37,12 +37,12 @@ public class BookServiceImpl implements BookService
 
 
     /**
-     * Find all books by isbn.
+     * Find all books by ISBN-10.
      *
-     * @param isbn
+     * @param isbn10
      */
     @Override
-    public List<Book> find(String isbn) { return bookRepository.findByIsbn(isbn); }
+    public List<Book> find(String isbn10) { return bookRepository.findByIsbn10(isbn10); }
 
 
     private Book findBookChecked(Long bookId) throws EntityNotFoundException

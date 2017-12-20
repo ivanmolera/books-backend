@@ -11,6 +11,6 @@ public interface BookService
 
     Book find(Long bookId) throws EntityNotFoundException, EntityNotFoundException;
 
-    List<Book> find(String isbn);
+    List<Book> find(String isbn10);
 
 }
