@@ -7,11 +7,9 @@ import java.util.List;
 
 /**
  * Database Access Object for book table.
- * <p/>
  */
 public interface BookRepository extends CrudRepository<Book, Long>
 {
-
     List<Book> findByIsbn10(String isbn10);
 
     List<Book> findAll();

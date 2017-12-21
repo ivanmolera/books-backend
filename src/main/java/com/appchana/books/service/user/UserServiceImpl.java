@@ -55,7 +55,7 @@ public class UserServiceImpl implements UserService
     @Override
     public User create(User user) throws ConstraintsViolationException
     {
-        User newUser;
+        User newUser = null;
         try
         {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -66,7 +66,7 @@ public class UserServiceImpl implements UserService
             LOG.warn("Some constraints are thrown due to user creation", e);
             throw new ConstraintsViolationException(e.getMessage());
         }
-        return user;
+        return newUser;
     }
 
 

@@ -2,12 +2,16 @@ package com.appchana.books.controller;
 
 import com.appchana.books.controller.mapper.BookMapper;
 import com.appchana.books.dto.BookDTO;
+import com.appchana.books.exception.ConstraintsViolationException;
 import com.appchana.books.exception.EntityNotFoundException;
+import com.appchana.books.model.Book;
 import com.appchana.books.service.book.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -31,6 +35,20 @@ public class BookController
     public BookDTO getBook(@Valid @PathVariable long bookId) throws EntityNotFoundException
     {
         return BookMapper.makeBookDTO(bookService.find(bookId));
+    }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public BookDTO createBook(@Valid @RequestBody BookDTO bookDTO) throws IOException, ConstraintsViolationException
+    {
+        Book book = BookMapper.makeBook(bookDTO);
+        return BookMapper.makeBookDTO(bookService.create(book));
+    }
+
+    @DeleteMapping("/{bookId}")
+    public void deleteBook(@Valid @PathVariable long bookId) throws EntityNotFoundException
+    {
+        bookService.delete(bookId);
     }
 
     @GetMapping

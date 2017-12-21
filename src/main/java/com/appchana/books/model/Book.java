@@ -31,7 +31,13 @@ public class Book
     @NotNull(message = "Title can not be null!")
     private String title;
 
-    private Float averageRating;
+    private String synopsis;
+
+    private String language;
+
+    private Integer pageCount;
+
+    private Double averageRating;
 
     @Column(nullable = false)
     private Boolean deleted = false;
@@ -41,11 +47,14 @@ public class Book
     }
 
 
-    public Book(String isbn10, String isbn13, String title, Float averageRating)
+    public Book(String isbn10, String isbn13, String title, String synopsis, String language, Integer pageCount, Double averageRating)
     {
         this.isbn10 = isbn10;
         this.isbn13 = isbn13;
         this.title = title;
+        this.synopsis = synopsis;
+        this.language = language;
+        this.pageCount = pageCount;
         this.averageRating = averageRating;
         this.deleted = false;
     }
@@ -71,9 +80,36 @@ public class Book
     public void setTitle(String title) { this.title = title; }
 
 
-    public Float getAverageRating() { return averageRating; }
+    public String getSynopsis() {
+        return synopsis;
+    }
 
-    public void setAverageRating(Float averageRating) { this.averageRating = averageRating; }
+    public void setSynopsis(String synopsis) {
+        this.synopsis = synopsis;
+    }
+
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
+    }
+
+
+    public Integer getPageCount() {
+        return pageCount;
+    }
+
+    public void setPageCount(Integer pageCount) {
+        this.pageCount = pageCount;
+    }
+
+
+    public Double getAverageRating() { return averageRating; }
+
+    public void setAverageRating(Double averageRating) { this.averageRating = averageRating; }
 
 
     public Boolean getDeleted() { return deleted; }

@@ -1,19 +1,69 @@
 package com.appchana.books.controller.mapper;
 
+import com.appchana.books.common.Constants;
 import com.appchana.books.model.Book;
 import com.appchana.books.dto.BookDTO;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class BookMapper
 {
-    public static Book makeBookDO(BookDTO bookDTO)
+    public static Book makeBook(BookDTO bookDTO)
     {
-        return new Book(bookDTO.getIsbn10(), bookDTO.getIsbn13(), bookDTO.getTitle(), bookDTO.getAverageRating());
+        return new Book(bookDTO.getIsbn10(), bookDTO.getIsbn13(), bookDTO.getTitle(), bookDTO.getSynopsis(), bookDTO.getLanguage(), bookDTO.getPageCount(), bookDTO.getAverageRating());
     }
 
+    public static Book makeBook(JSONObject jsonObject)
+    {
+        // volumeInfo
+        //      industryIdentifiers
+        //          type (ISBN_10, ISBN_13)
+        //          identifier
+        //      title
+        //      language
+        //      pageCount
+        //      averageRating
+        //      imageLinks
+        //          thumbnail
+        //          smallThumbnail
+        // searchInfo
+        //      textSnippet
+
+        JSONObject volumeInfo = (JSONObject) jsonObject.get("volumeInfo");
+
+        String title         = (String) volumeInfo.get("title");
+        String language      = (String) volumeInfo.get("language");
+        Integer pageCount    = (Integer) volumeInfo.get("pageCount");
+        Double averageRating = (Double) volumeInfo.get("averageRating");
+
+        String isbn10 = null;
+        String isbn13 = null;
+
+        JSONArray identifiers = (JSONArray) volumeInfo.get("industryIdentifiers");
+        for (int i = 0; i < identifiers.length(); i++) {
+            JSONObject identifier = (JSONObject) identifiers.get(i);
+
+            String type = (String) identifier.get("type");
+            String value = (String) identifier.get("identifier");
+
+            if(Constants.ISBN_10.equalsIgnoreCase(type)) {
+                isbn10 = value;
+            }
+            if(Constants.ISBN_13.equalsIgnoreCase(type)) {
+                isbn13 = value;
+            }
+        }
+
+        JSONObject searchInfo = (JSONObject) jsonObject.get("searchInfo");
+        String synopsis = (String) searchInfo.get("textSnippet");
+
+        return new Book(isbn10, isbn13, title, synopsis, language, pageCount, averageRating);
+    }
 
     public static BookDTO makeBookDTO(Book book)
     {
@@ -22,6 +72,9 @@ public class BookMapper
             .setIsbn10(book.getIsbn10())
             .setIsbn13(book.getIsbn13())
             .setTitle(book.getTitle())
+            .setSynopsis(book.getSynopsis())
+            .setLanguage(book.getLanguage())
+            .setPageCount(book.getPageCount())
             .setAverageRating(book.getAverageRating());
 
         return bookDTOBuilder.createBookDTO();

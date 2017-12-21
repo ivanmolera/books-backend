@@ -20,19 +20,28 @@ public class BookDTO
     @NotNull(message = "Title type can not be null!")
     private String title;
 
-    private Float averageRating;
+    private String synopsis;
+
+    private String language;
+
+    private Integer pageCount;
+
+    private Double averageRating;
 
     private BookDTO()
     {
     }
 
 
-    public BookDTO(Long bookId, String isbn10, String isbn13, String title, Float averageRating)
+    public BookDTO(Long bookId, String isbn10, String isbn13, String title, String synopsis, String language, Integer pageCount, Double averageRating)
     {
         this.bookId = bookId;
         this.isbn10 = isbn10;
         this.isbn13 = isbn13;
         this.title = title;
+        this.synopsis = synopsis;
+        this.language = language;
+        this.pageCount = pageCount;
         this.averageRating = averageRating;
     }
 
@@ -56,7 +65,13 @@ public class BookDTO
 
     public String getTitle() { return title; }
 
-    public Float getAverageRating() { return averageRating; }
+    public String getSynopsis() { return synopsis; }
+
+    public String getLanguage() { return language; }
+
+    public Integer getPageCount() { return pageCount; }
+
+    public Double getAverageRating() { return averageRating; }
 
 
     public static class BookDTOBuilder
@@ -65,7 +80,10 @@ public class BookDTO
         private String isbn10;
         private String isbn13;
         private String title;
-        private Float averageRating;
+        private String synopsis;
+        private String language;
+        private Integer pageCount;
+        private Double averageRating;
 
 
         public BookDTOBuilder setBookId(Long bookId)
@@ -96,7 +114,28 @@ public class BookDTO
         }
 
 
-        public BookDTOBuilder setAverageRating(Float averageRating)
+        public BookDTOBuilder setSynopsis(String synopsis)
+        {
+            this.synopsis = synopsis;
+            return this;
+        }
+
+
+        public BookDTOBuilder setLanguage(String language)
+        {
+            this.language = language;
+            return this;
+        }
+
+
+        public BookDTOBuilder setPageCount(Integer pageCount)
+        {
+            this.pageCount = pageCount;
+            return this;
+        }
+
+
+        public BookDTOBuilder setAverageRating(Double averageRating)
         {
             this.averageRating = averageRating;
             return this;
@@ -105,7 +144,7 @@ public class BookDTO
 
         public BookDTO createBookDTO()
         {
-            return new BookDTO(bookId, isbn10, isbn13, title, averageRating);
+            return new BookDTO(bookId, isbn10, isbn13, title, synopsis, language, pageCount, averageRating);
         }
 
     }
