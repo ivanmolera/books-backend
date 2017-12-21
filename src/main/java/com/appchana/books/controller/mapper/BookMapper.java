@@ -1,13 +1,12 @@
 package com.appchana.books.controller.mapper;
 
 import com.appchana.books.common.Constants;
-import com.appchana.books.model.Book;
 import com.appchana.books.dto.BookDTO;
+import com.appchana.books.model.Book;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -15,7 +14,7 @@ public class BookMapper
 {
     public static Book makeBook(BookDTO bookDTO)
     {
-        return new Book(bookDTO.getIsbn10(), bookDTO.getIsbn13(), bookDTO.getTitle(), bookDTO.getSynopsis(), bookDTO.getLanguage(), bookDTO.getPageCount(), bookDTO.getAverageRating());
+        return new Book(bookDTO.getIsbn10(), bookDTO.getIsbn13(), bookDTO.getTitle(), bookDTO.getSubtitle(), bookDTO.getSynopsis(), bookDTO.getLanguage(), bookDTO.getPageCount(), bookDTO.getAverageRating(), bookDTO.getThumbnail());
     }
 
     public static Book makeBook(JSONObject jsonObject)
@@ -37,6 +36,7 @@ public class BookMapper
         JSONObject volumeInfo = (JSONObject) jsonObject.get("volumeInfo");
 
         String title         = (String) volumeInfo.get("title");
+        String subtitle      = (String) volumeInfo.get("subtitle");
         String language      = (String) volumeInfo.get("language");
         Integer pageCount    = (Integer) volumeInfo.get("pageCount");
         Double averageRating = (Double) volumeInfo.get("averageRating");
@@ -62,7 +62,10 @@ public class BookMapper
         JSONObject searchInfo = (JSONObject) jsonObject.get("searchInfo");
         String synopsis = (String) searchInfo.get("textSnippet");
 
-        return new Book(isbn10, isbn13, title, synopsis, language, pageCount, averageRating);
+        JSONObject imageLinks = (JSONObject) volumeInfo.get("imageLinks");
+        String thumbnail = (String) imageLinks.get("thumbnail");
+
+        return new Book(isbn10, isbn13, title, subtitle, synopsis, language, pageCount, averageRating, thumbnail);
     }
 
     public static BookDTO makeBookDTO(Book book)
@@ -72,10 +75,12 @@ public class BookMapper
             .setIsbn10(book.getIsbn10())
             .setIsbn13(book.getIsbn13())
             .setTitle(book.getTitle())
+            .setSubtitle(book.getSubtitle())
             .setSynopsis(book.getSynopsis())
             .setLanguage(book.getLanguage())
             .setPageCount(book.getPageCount())
-            .setAverageRating(book.getAverageRating());
+            .setAverageRating(book.getAverageRating())
+            .setThumbnail(book.getThumbnail());
 
         return bookDTOBuilder.createBookDTO();
     }

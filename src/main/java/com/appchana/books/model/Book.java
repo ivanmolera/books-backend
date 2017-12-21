@@ -31,6 +31,8 @@ public class Book
     @NotNull(message = "Title can not be null!")
     private String title;
 
+    private String subtitle;
+
     private String synopsis;
 
     private String language;
@@ -38,6 +40,8 @@ public class Book
     private Integer pageCount;
 
     private Double averageRating;
+
+    private String thumbnail;
 
     @Column(nullable = false)
     private Boolean deleted = false;
@@ -47,15 +51,17 @@ public class Book
     }
 
 
-    public Book(String isbn10, String isbn13, String title, String synopsis, String language, Integer pageCount, Double averageRating)
+    public Book(String isbn10, String isbn13, String title, String subtitle, String synopsis, String language, Integer pageCount, Double averageRating, String thumbnail)
     {
         this.isbn10 = isbn10;
         this.isbn13 = isbn13;
         this.title = title;
+        this.subtitle = subtitle;
         this.synopsis = synopsis;
         this.language = language;
         this.pageCount = pageCount;
         this.averageRating = averageRating;
+        this.thumbnail = thumbnail;
         this.deleted = false;
     }
 
@@ -78,6 +84,11 @@ public class Book
     public String getTitle() { return title; }
 
     public void setTitle(String title) { this.title = title; }
+
+
+    public String getSubtitle() { return subtitle; }
+
+    public void setSubtitle(String subtitle) { this.subtitle = subtitle; }
 
 
     public String getSynopsis() {
@@ -110,6 +121,15 @@ public class Book
     public Double getAverageRating() { return averageRating; }
 
     public void setAverageRating(Double averageRating) { this.averageRating = averageRating; }
+
+
+    public String getThumbnail() {
+        return thumbnail;
+    }
+
+    public void setThumbnail(String thumbnail) {
+        this.thumbnail = thumbnail;
+    }
 
 
     public Boolean getDeleted() { return deleted; }

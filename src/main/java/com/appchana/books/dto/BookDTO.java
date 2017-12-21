@@ -20,6 +20,8 @@ public class BookDTO
     @NotNull(message = "Title type can not be null!")
     private String title;
 
+    private String subtitle;
+
     private String synopsis;
 
     private String language;
@@ -28,21 +30,25 @@ public class BookDTO
 
     private Double averageRating;
 
+    private String thumbnail;
+
     private BookDTO()
     {
     }
 
 
-    public BookDTO(Long bookId, String isbn10, String isbn13, String title, String synopsis, String language, Integer pageCount, Double averageRating)
+    public BookDTO(Long bookId, String isbn10, String isbn13, String title, String subtitle, String synopsis, String language, Integer pageCount, Double averageRating, String thumbnail)
     {
         this.bookId = bookId;
         this.isbn10 = isbn10;
         this.isbn13 = isbn13;
         this.title = title;
+        this.subtitle = subtitle;
         this.synopsis = synopsis;
         this.language = language;
         this.pageCount = pageCount;
         this.averageRating = averageRating;
+        this.thumbnail = thumbnail;
     }
 
 
@@ -65,6 +71,8 @@ public class BookDTO
 
     public String getTitle() { return title; }
 
+    public String getSubtitle() { return subtitle; }
+
     public String getSynopsis() { return synopsis; }
 
     public String getLanguage() { return language; }
@@ -73,6 +81,8 @@ public class BookDTO
 
     public Double getAverageRating() { return averageRating; }
 
+    public String getThumbnail() { return thumbnail; }
+
 
     public static class BookDTOBuilder
     {
@@ -80,10 +90,12 @@ public class BookDTO
         private String isbn10;
         private String isbn13;
         private String title;
+        private String subtitle;
         private String synopsis;
         private String language;
         private Integer pageCount;
         private Double averageRating;
+        private String thumbnail;
 
 
         public BookDTOBuilder setBookId(Long bookId)
@@ -110,6 +122,13 @@ public class BookDTO
         public BookDTOBuilder setTitle(String title)
         {
             this.title = title;
+            return this;
+        }
+
+
+        public BookDTOBuilder setSubtitle(String subtitle)
+        {
+            this.subtitle = subtitle;
             return this;
         }
 
@@ -142,9 +161,16 @@ public class BookDTO
         }
 
 
+        public BookDTOBuilder setThumbnail(String thumbnail)
+        {
+            this.thumbnail = thumbnail;
+            return this;
+        }
+
+
         public BookDTO createBookDTO()
         {
-            return new BookDTO(bookId, isbn10, isbn13, title, synopsis, language, pageCount, averageRating);
+            return new BookDTO(bookId, isbn10, isbn13, title, subtitle, synopsis, language, pageCount, averageRating, thumbnail);
         }
 
     }
