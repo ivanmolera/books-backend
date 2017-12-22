@@ -5,7 +5,7 @@ import com.appchana.books.controller.mapper.BookMapper;
 import com.appchana.books.exception.ConstraintsViolationException;
 import com.appchana.books.exception.EntityNotFoundException;
 import com.appchana.books.exception.InvalidIdentifierException;
-import com.appchana.books.googlebooks.GoogleBooks;
+import com.appchana.books.googlebooks.GoogleBooksAPIService;
 import com.appchana.books.model.Book;
 import com.appchana.books.model.dao.BookRepository;
 import com.appchana.books.util.CheckISBN;
@@ -17,7 +17,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -66,7 +65,7 @@ public class BookServiceImpl implements BookService
             throw new ConstraintsViolationException(message);
         }
         else {
-            JSONObject jsonObject = GoogleBooks.searchBookByIsbn(book.getIsbn10());
+            JSONObject jsonObject = GoogleBooksAPIService.searchBookByIsbn(book.getIsbn10());
 
             Integer totalItems = (Integer) jsonObject.get("totalItems");
             if (totalItems.intValue() > 0) {
