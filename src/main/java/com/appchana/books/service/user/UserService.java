@@ -3,7 +3,7 @@ package com.appchana.books.service.user;
 import com.appchana.books.domainvalue.OnlineStatus;
 import com.appchana.books.exception.ConstraintsViolationException;
 import com.appchana.books.exception.EntityNotFoundException;
-import com.appchana.books.model.User;
+import com.appchana.books.dao.model.User;
 
 import java.util.List;
 

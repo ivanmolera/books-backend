@@ -5,7 +5,7 @@ import com.appchana.books.domainvalue.OnlineStatus;
 import com.appchana.books.dto.UserDTO;
 import com.appchana.books.exception.ConstraintsViolationException;
 import com.appchana.books.exception.EntityNotFoundException;
-import com.appchana.books.model.User;
+import com.appchana.books.dao.model.User;
 import com.appchana.books.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

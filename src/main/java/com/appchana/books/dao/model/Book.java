@@ -1,4 +1,4 @@
-package com.appchana.books.model;
+package com.appchana.books.dao.model;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -8,8 +8,10 @@ import java.time.ZonedDateTime;
 
 @Entity
 @Table(
-    name = "books",
-    uniqueConstraints = @UniqueConstraint(name = "uc_books_isbn", columnNames = {"isbn10"})
+    name = "books", uniqueConstraints = {
+        @UniqueConstraint(name = "uc_books_isbn10", columnNames = "isbn10"),
+        @UniqueConstraint(name = "uc_books_isbn13", columnNames = "isbn13")
+    }
 )
 public class Book
 {
@@ -45,6 +47,7 @@ public class Book
 
     @Column(nullable = false)
     private Boolean deleted = false;
+
 
     private Book()
     {

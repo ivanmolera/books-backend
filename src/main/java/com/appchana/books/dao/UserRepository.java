@@ -1,7 +1,7 @@
-package com.appchana.books.model.dao;
+package com.appchana.books.dao;
 
+import com.appchana.books.dao.model.User;
 import com.appchana.books.domainvalue.OnlineStatus;
-import com.appchana.books.model.User;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;

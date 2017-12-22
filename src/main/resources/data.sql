@@ -35,3 +35,15 @@ insert into books (book_id, date_created, deleted, isbn10, isbn13, title, page_c
 insert into books (book_id, date_created, deleted, isbn10, isbn13, title, page_count, average_rating) values (4, now(), false, '8401018331', '9788401018336', 'Fin de guardia', null, 5);
 
 insert into books (book_id, date_created, deleted, isbn10, isbn13, title, page_count, average_rating) values (5, now(), false, '8499308724', '9788499308722', 'Inferno', null, 3);
+
+
+-- Create 5 userbooks for user 1
+insert into user_books(user_book_id, date_created, deleted, user_id, book_id) values (1, now(), false, 1, 1);
+
+insert into user_books(user_book_id, date_created, deleted, user_id, book_id) values (2, now(), false, 1, 2);
+
+insert into user_books(user_book_id, date_created, deleted, user_id, book_id) values (3, now(), false, 1, 3);
+
+insert into user_books(user_book_id, date_created, deleted, user_id, book_id) values (4, now(), false, 1, 4);
+
+insert into user_books(user_book_id, date_created, deleted, user_id, book_id) values (5, now(), false, 1, 5);

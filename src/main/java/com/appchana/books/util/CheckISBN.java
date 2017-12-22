@@ -2,7 +2,7 @@ package com.appchana.books.util;
 
 import com.appchana.books.common.Constants;
 import com.appchana.books.exception.InvalidIdentifierException;
-import com.appchana.books.model.Book;
+import com.appchana.books.dao.model.Book;
 import org.apache.juli.logging.Log;
 import org.apache.juli.logging.LogFactory;
 

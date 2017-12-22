@@ -2,7 +2,7 @@ package com.appchana.books.controller.mapper;
 
 import com.appchana.books.common.Constants;
 import com.appchana.books.dto.BookDTO;
-import com.appchana.books.model.Book;
+import com.appchana.books.dao.model.Book;
 import org.json.JSONArray;
 import org.json.JSONObject;
 

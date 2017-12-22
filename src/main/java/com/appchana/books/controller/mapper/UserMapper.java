@@ -1,7 +1,7 @@
 package com.appchana.books.controller.mapper;
 
 import com.appchana.books.dto.UserDTO;
-import com.appchana.books.model.User;
+import com.appchana.books.dao.model.User;
 
 import java.util.Collection;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.appchana.books.model;
+package com.appchana.books.dao.model;
 
 import com.appchana.books.domainvalue.OnlineStatus;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -6,6 +6,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.ZonedDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(
@@ -38,6 +40,10 @@ public class User
     @Column(nullable = false)
     private OnlineStatus onlineStatus;
 
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @JoinColumn(name = "userId")
+    private Set<UserBook> userBooks = new HashSet<UserBook>(0);
+
     private User()
     {
     }
@@ -49,6 +55,14 @@ public class User
         this.password = password;
         this.deleted = false;
         this.onlineStatus = OnlineStatus.OFFLINE;
+    }
+
+    public User(String username, String password, Set<UserBook> userBooks) {
+        this.username = username;
+        this.password = password;
+        this.deleted = false;
+        this.onlineStatus = OnlineStatus.OFFLINE;
+        this.userBooks = userBooks;
     }
 
 
@@ -94,5 +108,15 @@ public class User
     public void setOnlineStatus(OnlineStatus onlineStatus)
     {
         this.onlineStatus = onlineStatus;
+    }
+
+
+    public Set<UserBook> getUserBooks() {
+        return this.userBooks;
+    }
+
+
+    public void setUserBooks(Set<UserBook> userBooks) {
+        this.userBooks = userBooks;
     }
 }

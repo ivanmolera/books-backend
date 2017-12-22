@@ -2,7 +2,7 @@ package com.appchana.books.service.book;
 
 import com.appchana.books.exception.ConstraintsViolationException;
 import com.appchana.books.exception.InvalidIdentifierException;
-import com.appchana.books.model.Book;
+import com.appchana.books.dao.model.Book;
 import com.appchana.books.exception.EntityNotFoundException;
 
 import java.io.IOException;

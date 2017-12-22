@@ -5,7 +5,7 @@ import com.appchana.books.dto.BookDTO;
 import com.appchana.books.exception.ConstraintsViolationException;
 import com.appchana.books.exception.EntityNotFoundException;
 import com.appchana.books.exception.InvalidIdentifierException;
-import com.appchana.books.model.Book;
+import com.appchana.books.dao.model.Book;
 import com.appchana.books.service.book.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
