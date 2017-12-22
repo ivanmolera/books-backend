@@ -4,6 +4,7 @@ import com.appchana.books.controller.mapper.BookMapper;
 import com.appchana.books.dto.BookDTO;
 import com.appchana.books.exception.ConstraintsViolationException;
 import com.appchana.books.exception.EntityNotFoundException;
+import com.appchana.books.exception.InvalidIdentifierException;
 import com.appchana.books.model.Book;
 import com.appchana.books.service.book.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +40,7 @@ public class BookController
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public BookDTO createBook(@Valid @RequestBody BookDTO bookDTO) throws IOException, ConstraintsViolationException
+    public BookDTO createBook(@Valid @RequestBody BookDTO bookDTO) throws IOException, ConstraintsViolationException, InvalidIdentifierException
     {
         Book book = BookMapper.makeBook(bookDTO);
         return BookMapper.makeBookDTO(bookService.create(book));
@@ -52,9 +53,8 @@ public class BookController
     }
 
     @GetMapping
-    public List<BookDTO> findBooks(@RequestParam String isbn10)
-        throws EntityNotFoundException
+    public List<BookDTO> findBooks(@RequestParam String isbn) throws EntityNotFoundException, InvalidIdentifierException
     {
-        return BookMapper.makeBookDTOList(bookService.find(isbn10));
+        return BookMapper.makeBookDTOList(bookService.find(isbn));
     }
 }

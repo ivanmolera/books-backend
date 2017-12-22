@@ -19,20 +19,6 @@ public class BookMapper
 
     public static Book makeBook(JSONObject jsonObject)
     {
-        // volumeInfo
-        //      industryIdentifiers
-        //          type (ISBN_10, ISBN_13)
-        //          identifier
-        //      title
-        //      language
-        //      pageCount
-        //      averageRating
-        //      imageLinks
-        //          thumbnail
-        //          smallThumbnail
-        // searchInfo
-        //      textSnippet
-
         JSONObject volumeInfo = (JSONObject) jsonObject.get("volumeInfo");
 
         String title         = (String) volumeInfo.get("title");

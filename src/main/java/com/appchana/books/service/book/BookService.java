@@ -1,6 +1,7 @@
 package com.appchana.books.service.book;
 
 import com.appchana.books.exception.ConstraintsViolationException;
+import com.appchana.books.exception.InvalidIdentifierException;
 import com.appchana.books.model.Book;
 import com.appchana.books.exception.EntityNotFoundException;
 
@@ -13,10 +14,10 @@ public interface BookService
 
     Book find(Long bookId) throws EntityNotFoundException;
 
-    Book create(Book book) throws IOException, ConstraintsViolationException;
+    Book create(Book book) throws IOException, ConstraintsViolationException, InvalidIdentifierException;
 
     void delete(Long bookId) throws EntityNotFoundException;
 
-    List<Book> find(String isbn10);
+    List<Book> find(String isbn) throws InvalidIdentifierException;
 
 }

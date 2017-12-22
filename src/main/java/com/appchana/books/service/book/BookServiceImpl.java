@@ -1,12 +1,14 @@
 package com.appchana.books.service.book;
 
+import com.appchana.books.common.Constants;
 import com.appchana.books.controller.mapper.BookMapper;
 import com.appchana.books.exception.ConstraintsViolationException;
-import com.appchana.books.googlebooks.GoogleBooks;
-import com.appchana.books.model.User;
-import com.appchana.books.model.dao.BookRepository;
-import com.appchana.books.model.Book;
 import com.appchana.books.exception.EntityNotFoundException;
+import com.appchana.books.exception.InvalidIdentifierException;
+import com.appchana.books.googlebooks.GoogleBooks;
+import com.appchana.books.model.Book;
+import com.appchana.books.model.dao.BookRepository;
+import com.appchana.books.util.CheckISBN;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.slf4j.LoggerFactory;
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -44,7 +47,6 @@ public class BookServiceImpl implements BookService
         return findBookChecked(bookId);
     }
 
-
     /**
      * Creates a new book.
      *
@@ -53,11 +55,11 @@ public class BookServiceImpl implements BookService
      * @throws ConstraintsViolationException if a book already exists with the given ISBN
      */
     @Override
-    public Book create(Book book) throws IOException, ConstraintsViolationException
+    public Book create(Book book) throws IOException, ConstraintsViolationException, InvalidIdentifierException
     {
         Book newBook = null;
 
-        List<Book> booksList = this.find(book.getIsbn10());
+        List<Book> booksList = this.find(CheckISBN.getISBN(book));
         if(booksList != null && !booksList.isEmpty()) {
             String message = "A book already exists with the given ISBN: " + book.getIsbn10();
             LOG.warn(message);
@@ -97,13 +99,28 @@ public class BookServiceImpl implements BookService
     }
 
     /**
-     * Find all books by ISBN-10.
+     * Find all books by ISBN, ...
      *
-     * @param isbn10
+     * @param isbn
      */
     @Override
-    public List<Book> find(String isbn10) { return bookRepository.findByIsbn10(isbn10); }
-
+    public List<Book> find(String isbn) throws InvalidIdentifierException
+    {
+        List<Book> booksList;
+        String isbnType = CheckISBN.getISBNType(isbn);
+        if(isbnType != null) {
+            if (Constants.ISBN_10.equals(isbnType)) {
+                booksList = bookRepository.findByIsbn10(isbn);
+            }
+            else {
+                booksList = bookRepository.findByIsbn13(isbn);
+            }
+        }
+        else {
+            throw new InvalidIdentifierException("Invalid ISBN: " + isbn);
+        }
+        return booksList;
+    }
 
     private Book findBookChecked(Long bookId) throws EntityNotFoundException
     {
