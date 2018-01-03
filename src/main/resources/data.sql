@@ -1,5 +1,5 @@
 /**
- * CREATE Script for init of DB
+ * Script for database initialization
  */
 
 -- Create 3 offline users

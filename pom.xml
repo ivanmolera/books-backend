@@ -9,7 +9,7 @@
 	<packaging>jar</packaging>
 
 	<name>books</name>
-	<description>Demo project for Spring Boot</description>
+	<description>Books API</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -23,7 +23,7 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
 		<!-- dependency versions -->
-		<com.google.guava.guava.version>21.0</com.google.guava.guava.version>
+		<com.google.guava.guava.version>23.0</com.google.guava.guava.version>
 		<io.springfox.springfox-swagger2>2.3.1</io.springfox.springfox-swagger2>
 		<io.springfox.springfox-swagger-ui>2.3.1</io.springfox.springfox-swagger-ui>
 	</properties>
