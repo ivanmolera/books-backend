@@ -11,7 +11,13 @@ public class CheckISBN
 
     private static final Log LOG = LogFactory.getLog(CheckISBN.class);
 
-    public static String getISBNType(String isbn) throws InvalidIdentifierException
+    /**
+     * Returns the ISBN Type of a given ISBN.
+     *
+     * @param isbn
+     * @return found isbnType
+     */
+    public static String getISBNType(String isbn)
     {
         String isbnType = null;
         if(isbn != null && isbn.length() == 10) {
@@ -23,7 +29,13 @@ public class CheckISBN
         return isbnType;
     }
 
-    public static String getISBN(Book book) throws InvalidIdentifierException
+    /**
+     * Returns the ISBN of a given Book.
+     *
+     * @param book
+     * @return found ISBN
+     */
+    public static String getISBN(Book book)
     {
         String isbn10 = book.getIsbn10();
         String isbn13 = book.getIsbn13();
