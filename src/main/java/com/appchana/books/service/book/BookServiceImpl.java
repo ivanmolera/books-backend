@@ -67,10 +67,12 @@ public class BookServiceImpl implements BookService
         else {
             JSONObject jsonObject = GoogleBooksAPIService.searchBookByIsbn(book.getIsbn10());
 
-            Integer totalItems = (Integer) jsonObject.get("totalItems");
-            if (totalItems.intValue() > 0) {
+            if(jsonObject != null && jsonObject.length() > 0) {
                 JSONArray items = (JSONArray) jsonObject.get("items");
-                book = BookMapper.makeBook((JSONObject) items.get(0));
+                book = GoogleBooksAPIService.parseBookWithBasicInfo((JSONObject) items.get(0));
+
+                JSONObject jsonVolume = GoogleBooksAPIService.searchBookByGoogleBooksId(book.getGoogleBooksId());
+                book = GoogleBooksAPIService.parseBook(jsonVolume);
             }
 
             try {

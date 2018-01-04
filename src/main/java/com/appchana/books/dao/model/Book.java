@@ -22,6 +22,7 @@ public class Book
 {
     private Long bookId;
     private ZonedDateTime dateCreated = ZonedDateTime.now();
+    private String googleBooksId;
     private String isbn10;
     private String isbn13;
     private String title;
@@ -39,9 +40,15 @@ public class Book
     {
     }
 
-
-    public Book(String isbn10, String isbn13, String title, String subtitle, String synopsis, String language, Integer pageCount, Double averageRating, String cover)
+    public Book(String googleBooksId, String title)
     {
+        this.googleBooksId = googleBooksId;
+        this.title = title;
+    }
+
+    public Book(String googleBooksId, String isbn10, String isbn13, String title, String subtitle, String synopsis, String language, Integer pageCount, Double averageRating, String cover)
+    {
+        this.googleBooksId = googleBooksId;
         this.isbn10 = isbn10;
         this.isbn13 = isbn13;
         this.title = title;
@@ -71,6 +78,15 @@ public class Book
 
     public void setDateCreated(ZonedDateTime dateCreated) {
         this.dateCreated = dateCreated;
+    }
+
+
+    public String getGoogleBooksId() {
+        return googleBooksId;
+    }
+
+    public void setGoogleBooksId(String googleBooksId) {
+        this.googleBooksId = googleBooksId;
     }
 
 

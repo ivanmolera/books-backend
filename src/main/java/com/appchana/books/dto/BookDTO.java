@@ -7,6 +7,8 @@ public class BookDTO
 {
     private Long bookId;
 
+    private String googleBooksId;
+
     @NotNull(message = "ISBN-10 can not be null!")
     private String isbn10;
 
@@ -32,8 +34,9 @@ public class BookDTO
     }
 
 
-    public BookDTO(Long bookId, String isbn10, String isbn13, String title, String subtitle, String synopsis, String language, Integer pageCount, Double averageRating, String cover)
+    public BookDTO(Long bookId, String googleBooksId, String isbn10, String isbn13, String title, String subtitle, String synopsis, String language, Integer pageCount, Double averageRating, String cover)
     {
+        this.googleBooksId = googleBooksId;
         this.bookId = bookId;
         this.isbn10 = isbn10;
         this.isbn13 = isbn13;
@@ -58,6 +61,10 @@ public class BookDTO
         return bookId;
     }
 
+    public String getGoogleBooksId() {
+        return googleBooksId;
+    }
+
     public String getIsbn10() { return isbn10; }
 
     public String getIsbn13() { return isbn13; }
@@ -80,6 +87,7 @@ public class BookDTO
     public static class BookDTOBuilder
     {
         private Long bookId;
+        private String googleBooksId;
         private String isbn10;
         private String isbn13;
         private String title;
@@ -94,6 +102,13 @@ public class BookDTO
         public BookDTOBuilder setBookId(Long bookId)
         {
             this.bookId = bookId;
+            return this;
+        }
+
+
+        public BookDTOBuilder setGoogleBooksId(String googleBooksId)
+        {
+            this.googleBooksId = googleBooksId;
             return this;
         }
 
@@ -163,7 +178,7 @@ public class BookDTO
 
         public BookDTO createBookDTO()
         {
-            return new BookDTO(bookId, isbn10, isbn13, title, subtitle, synopsis, language, pageCount, averageRating, cover);
+            return new BookDTO(bookId, googleBooksId, isbn10, isbn13, title, subtitle, synopsis, language, pageCount, averageRating, cover);
         }
 
     }
