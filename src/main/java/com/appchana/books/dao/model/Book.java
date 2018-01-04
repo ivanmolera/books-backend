@@ -5,6 +5,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(
@@ -48,6 +50,16 @@ public class Book
     @Column(nullable = false)
     private Boolean deleted = false;
 
+    @ManyToMany(
+            fetch = FetchType.LAZY,
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH}
+    )
+    @JoinTable(
+            name = "user_books",
+            joinColumns = @JoinColumn(name = "book_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
+    private List<User> users;
 
     private Book()
     {
@@ -138,4 +150,13 @@ public class Book
     public Boolean getDeleted() { return deleted; }
 
     public void setDeleted(Boolean deleted) { this.deleted = deleted; }
+
+
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
+    }
 }

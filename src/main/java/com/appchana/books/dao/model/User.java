@@ -6,7 +6,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -40,9 +42,17 @@ public class User
     @Column(nullable = false)
     private OnlineStatus onlineStatus;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    @JoinColumn(name = "userId")
-    private Set<UserBook> userBooks = new HashSet<UserBook>(0);
+
+    @ManyToMany(
+            fetch = FetchType.LAZY,
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH}
+    )
+    @JoinTable(
+            name = "user_books",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "book_id")
+    )
+    private List<Book> books;
 
     private User()
     {
@@ -55,14 +65,6 @@ public class User
         this.password = password;
         this.deleted = false;
         this.onlineStatus = OnlineStatus.OFFLINE;
-    }
-
-    public User(String username, String password, Set<UserBook> userBooks) {
-        this.username = username;
-        this.password = password;
-        this.deleted = false;
-        this.onlineStatus = OnlineStatus.OFFLINE;
-        this.userBooks = userBooks;
     }
 
 
@@ -111,12 +113,19 @@ public class User
     }
 
 
-    public Set<UserBook> getUserBooks() {
-        return this.userBooks;
+    public List<Book> getBooks() {
+        return books;
     }
 
+    public void setBooks(List<Book> books) {
+        this.books = books;
+    }
 
-    public void setUserBooks(Set<UserBook> userBooks) {
-        this.userBooks = userBooks;
+    public void addBook(Book book) {
+        if(this.books == null) {
+            this.books = new ArrayList();
+        }
+
+        this.books.add(book);
     }
 }
