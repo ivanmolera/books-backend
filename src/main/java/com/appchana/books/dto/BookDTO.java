@@ -1,15 +1,10 @@
 package com.appchana.books.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import javax.validation.constraints.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
+//@JsonInclude(JsonInclude.Include.NON_NULL)
 public class BookDTO
 {
-    @JsonIgnore
     private Long bookId;
 
     @NotNull(message = "ISBN-10 can not be null!")
@@ -30,14 +25,14 @@ public class BookDTO
 
     private Double averageRating;
 
-    private String thumbnail;
+    private String cover;
 
     private BookDTO()
     {
     }
 
 
-    public BookDTO(Long bookId, String isbn10, String isbn13, String title, String subtitle, String synopsis, String language, Integer pageCount, Double averageRating, String thumbnail)
+    public BookDTO(Long bookId, String isbn10, String isbn13, String title, String subtitle, String synopsis, String language, Integer pageCount, Double averageRating, String cover)
     {
         this.bookId = bookId;
         this.isbn10 = isbn10;
@@ -48,7 +43,7 @@ public class BookDTO
         this.language = language;
         this.pageCount = pageCount;
         this.averageRating = averageRating;
-        this.thumbnail = thumbnail;
+        this.cover = cover;
     }
 
 
@@ -58,13 +53,11 @@ public class BookDTO
     }
 
 
-    @JsonProperty
     public Long getBookId()
     {
         return bookId;
     }
 
-    @JsonProperty
     public String getIsbn10() { return isbn10; }
 
     public String getIsbn13() { return isbn13; }
@@ -81,7 +74,7 @@ public class BookDTO
 
     public Double getAverageRating() { return averageRating; }
 
-    public String getThumbnail() { return thumbnail; }
+    public String getCover() { return cover; }
 
 
     public static class BookDTOBuilder
@@ -95,7 +88,7 @@ public class BookDTO
         private String language;
         private Integer pageCount;
         private Double averageRating;
-        private String thumbnail;
+        private String cover;
 
 
         public BookDTOBuilder setBookId(Long bookId)
@@ -161,16 +154,16 @@ public class BookDTO
         }
 
 
-        public BookDTOBuilder setThumbnail(String thumbnail)
+        public BookDTOBuilder setCover(String cover)
         {
-            this.thumbnail = thumbnail;
+            this.cover = cover;
             return this;
         }
 
 
         public BookDTO createBookDTO()
         {
-            return new BookDTO(bookId, isbn10, isbn13, title, subtitle, synopsis, language, pageCount, averageRating, thumbnail);
+            return new BookDTO(bookId, isbn10, isbn13, title, subtitle, synopsis, language, pageCount, averageRating, cover);
         }
 
     }

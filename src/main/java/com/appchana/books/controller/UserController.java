@@ -1,10 +1,12 @@
 package com.appchana.books.controller;
 
 import com.appchana.books.controller.mapper.BookMapper;
+import com.appchana.books.controller.mapper.UserBookMapper;
 import com.appchana.books.controller.mapper.UserMapper;
 import com.appchana.books.dao.model.Book;
 import com.appchana.books.domainvalue.OnlineStatus;
 import com.appchana.books.dto.BookDTO;
+import com.appchana.books.dto.UserBookDTO;
 import com.appchana.books.dto.UserDTO;
 import com.appchana.books.exception.ConstraintsViolationException;
 import com.appchana.books.exception.EntityNotFoundException;
@@ -42,10 +44,10 @@ public class UserController
     }
 
     @GetMapping("/{userId}/books")
-    public List<BookDTO> getUserBooks(@Valid @PathVariable long userId) throws EntityNotFoundException
+    public List<UserBookDTO> getUserBooks(@Valid @PathVariable long userId) throws EntityNotFoundException
     {
         User user = userService.find(userId);
-        return BookMapper.makeBookDTOList(user.getBooks());
+        return UserBookMapper.makeUserBookDTOList(user.getUserBooks());
     }
 
 

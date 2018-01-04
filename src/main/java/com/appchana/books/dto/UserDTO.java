@@ -9,13 +9,8 @@ import javax.validation.constraints.NotNull;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserDTO
 {
-    @JsonIgnore
     private Long userId;
-
-    @NotNull(message = "Username can not be null!")
     private String username;
-
-    @NotNull(message = "Password can not be null!")
     private String password;
 
     private UserDTO()
@@ -37,19 +32,19 @@ public class UserDTO
     }
 
 
-    @JsonProperty
     public Long getUserId()
     {
         return userId;
     }
 
-
+    @NotNull(message = "Username can not be null!")
     public String getUsername()
     {
         return username;
     }
 
-
+    @JsonIgnore
+    @NotNull(message = "Password can not be null!")
     public String getPassword()
     {
         return password;

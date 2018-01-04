@@ -1,7 +1,3 @@
-/**
- * CREATE Script for init of DB
- */
-
 -- Create 3 offline users
 insert into users (user_id, date_created, deleted, online_status, password, username) values (1, now(), false, 'OFFLINE','$2a$10$GTui6gdITj7awrCuF.V2x.dVsN9vcw.o1P9GvQoxZEPDKszXSPGkC', 'user01@gmail.com');
 
@@ -20,24 +16,24 @@ insert into users (user_id, date_created, deleted, online_status, password, user
 
 
 -- Create 5 books
-insert into books (book_id, date_created, deleted, isbn10, isbn13, title, page_count, average_rating) values (1, now(), false, '8408177087', '9788408177081', 'Origen', null, 3);
+insert into books (book_id, date_created, deleted, isbn10, isbn13, title, page_count, average_rating) values (1, now(), 0, '8408177087', '9788408177081', 'Origen', 103, 3);
 
-insert into books (book_id, date_created, deleted, isbn10, isbn13, title, page_count, average_rating) values (2, now(), false, '8401018250', null, 'Una columna de fuego', null, 2);
+insert into books (book_id, date_created, deleted, isbn10, isbn13, title, page_count, average_rating) values (2, now(), 0, '8401018250', null, 'Una columna de fuego', 210, 2);
 
-insert into books (book_id, date_created, deleted, isbn10, isbn13, title, page_count, average_rating) values (3, now(), false, '8408178946', '9788408178941', 'El fuego invisible', null, 3);
+insert into books (book_id, date_created, deleted, isbn10, isbn13, title, page_count, average_rating) values (3, now(), 0, '8408178946', '9788408178941', 'El fuego invisible', 566, 3);
 
-insert into books (book_id, date_created, deleted, isbn10, isbn13, title, page_count, average_rating) values (4, now(), false, '8401018331', '9788401018336', 'Fin de guardia', null, 5);
+insert into books (book_id, date_created, deleted, isbn10, isbn13, title, page_count, average_rating) values (4, now(), 0, '8401018331', '9788401018336', 'Fin de guardia', 201, 5);
 
-insert into books (book_id, date_created, deleted, isbn10, isbn13, title, page_count, average_rating) values (5, now(), false, '8499308724', '9788499308722', 'Inferno', null, 3);
+insert into books (book_id, date_created, deleted, isbn10, isbn13, title, page_count, average_rating) values (5, now(), 0, '8499308724', '9788499308722', 'Inferno', 566, 3);
 
 
 -- Create 5 userbooks for user 1
-insert into user_books(user_id, book_id) values (1, 1);
+insert into users_books(date_created, deleted, user_id, book_id, condition_type) values (now(), 0, 1, 1, 'NEW');
 
-insert into user_books(user_id, book_id) values (1, 2);
+insert into users_books(date_created, deleted, user_id, book_id, condition_type) values (now(), 0, 1, 2, 'NEW');
 
-insert into user_books(user_id, book_id) values (1, 3);
+insert into users_books(date_created, deleted, user_id, book_id, condition_type) values (now(), 0, 1, 3, 'USED');
 
-insert into user_books(user_id, book_id) values (1, 4);
+insert into users_books(date_created, deleted, user_id, book_id, condition_type) values (now(), 0, 1, 4, 'NEW');
 
-insert into user_books(user_id, book_id) values (1, 5);
+insert into users_books(date_created, deleted, user_id, book_id, condition_type) values (now(), 0, 1, 5, 'USED');

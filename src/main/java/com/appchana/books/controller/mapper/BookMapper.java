@@ -14,7 +14,7 @@ public class BookMapper
 {
     public static Book makeBook(BookDTO bookDTO)
     {
-        return new Book(bookDTO.getIsbn10(), bookDTO.getIsbn13(), bookDTO.getTitle(), bookDTO.getSubtitle(), bookDTO.getSynopsis(), bookDTO.getLanguage(), bookDTO.getPageCount(), bookDTO.getAverageRating(), bookDTO.getThumbnail());
+        return new Book(bookDTO.getIsbn10(), bookDTO.getIsbn13(), bookDTO.getTitle(), bookDTO.getSubtitle(), bookDTO.getSynopsis(), bookDTO.getLanguage(), bookDTO.getPageCount(), bookDTO.getAverageRating(), bookDTO.getCover());
     }
 
     public static Book makeBook(JSONObject jsonObject)
@@ -49,9 +49,9 @@ public class BookMapper
         String synopsis = (String) searchInfo.get("textSnippet");
 
         JSONObject imageLinks = (JSONObject) volumeInfo.get("imageLinks");
-        String thumbnail = (String) imageLinks.get("thumbnail");
+        String cover = (String) imageLinks.get("thumbnail");
 
-        return new Book(isbn10, isbn13, title, subtitle, synopsis, language, pageCount, averageRating, thumbnail);
+        return new Book(isbn10, isbn13, title, subtitle, synopsis, language, pageCount, averageRating, cover);
     }
 
     public static BookDTO makeBookDTO(Book book)
@@ -66,7 +66,7 @@ public class BookMapper
             .setLanguage(book.getLanguage())
             .setPageCount(book.getPageCount())
             .setAverageRating(book.getAverageRating())
-            .setThumbnail(book.getThumbnail());
+            .setCover(book.getCover());
 
         return bookDTOBuilder.createBookDTO();
     }

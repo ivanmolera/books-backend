@@ -1,33 +1,37 @@
 package com.appchana.books.dto;
 
+import com.appchana.books.dao.model.Book;
+import com.appchana.books.dao.model.User;
+import com.appchana.books.domainvalue.ConditionType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.validation.constraints.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
+//@JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserBookDTO
 {
-    @JsonIgnore
     private Long userBookId;
-
-    @NotNull(message = "UserId can not be null!")
-    private Long userId;
-
-    @NotNull(message = "BookId can not be null!")
-    private Long bookId;
+    private ConditionType conditionType;
+    private String picture01;
+    private String picture02;
+    private String picture03;
+    private User user;
+    private Book book;
 
     private UserBookDTO()
     {
     }
 
 
-    public UserBookDTO(Long userBookId, Long userId, Long bookId)
+    public UserBookDTO(Long userBookId, User user, Book book, ConditionType conditionType, String picture01, String picture02, String picture03)
     {
         this.userBookId = userBookId;
-        this.userId = userId;
-        this.bookId = bookId;
+        this.user = user;
+        this.book = book;
+        this.conditionType = conditionType;
+        this.picture01 = picture01;
+        this.picture02 = picture02;
+        this.picture03 = picture03;
     }
 
 
@@ -37,29 +41,51 @@ public class UserBookDTO
     }
 
 
-    @JsonProperty
     public Long getUserBookId()
     {
         return userBookId;
     }
 
-    @JsonProperty
-    public Long getUserId()
+    @JsonIgnore
+    @NotNull(message = "User can not be null!")
+    public User getUser()
     {
-        return userId;
+        return user;
     }
 
-    public Long getBookId()
+    @NotNull(message = "Book can not be null!")
+    public Book getBook()
     {
-        return bookId;
+        return book;
+    }
+
+    @NotNull(message = "ConditionType can not be null!")
+    public ConditionType getConditionType() {
+        return conditionType;
+    }
+
+    public String getPicture01() {
+        return picture01;
+    }
+
+    public String getPicture02() {
+        return picture02;
+    }
+
+    public String getPicture03() {
+        return picture03;
     }
 
 
     public static class UserBookDTOBuilder
     {
         private Long userBookId;
-        private Long userId;
-        private Long bookId;
+        private User user;
+        private Book book;
+        private ConditionType conditionType;
+        private String picture01;
+        private String picture02;
+        private String picture03;
 
 
         public UserBookDTOBuilder setUserBookId(Long userBookId)
@@ -69,23 +95,51 @@ public class UserBookDTO
         }
 
 
-        public UserBookDTOBuilder setUserId(Long userId)
+        public UserBookDTOBuilder setUser(User user)
         {
-            this.userId = userId;
+            this.user = user;
             return this;
         }
 
 
-        public UserBookDTOBuilder setBookId(Long bookId)
+        public UserBookDTOBuilder setBook(Book book)
         {
-            this.bookId = bookId;
+            this.book = book;
+            return this;
+        }
+
+
+        public UserBookDTOBuilder setConditionType(ConditionType conditionType)
+        {
+            this.conditionType = conditionType;
+            return this;
+        }
+
+
+        public UserBookDTOBuilder setPicture01(String picture01)
+        {
+            this.picture01 = picture01;
+            return this;
+        }
+
+
+        public UserBookDTOBuilder setPicture02(String picture02)
+        {
+            this.picture02 = picture02;
+            return this;
+        }
+
+
+        public UserBookDTOBuilder setPicture03(String picture03)
+        {
+            this.picture03 = picture03;
             return this;
         }
 
 
         public UserBookDTO createUserBookDTO()
         {
-            return new UserBookDTO(bookId, userId, bookId);
+            return new UserBookDTO(userBookId, user, book, conditionType, picture01, picture02, picture03);
         }
 
     }
