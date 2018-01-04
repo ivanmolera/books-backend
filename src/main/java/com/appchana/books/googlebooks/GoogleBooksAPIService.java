@@ -1,7 +1,7 @@
 package com.appchana.books.googlebooks;
 
 import com.appchana.books.common.Constants;
-import com.appchana.books.common.JsonReader;
+import com.appchana.books.util.JsonReader;
 import com.appchana.books.dao.model.Book;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -50,6 +50,9 @@ public class GoogleBooksAPIService {
         String description = null;
         if(volumeInfo.has("description")) {
             description = (String) volumeInfo.get("description");
+            if(description.length() > 250) {
+                description = description.substring(0, 247) + "...";
+            }
         }
         String language = null;
         if(volumeInfo.has("language")) {

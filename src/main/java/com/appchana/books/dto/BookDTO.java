@@ -19,7 +19,7 @@ public class BookDTO
 
     private String subtitle;
 
-    private String synopsis;
+    private String description;
 
     private String language;
 
@@ -34,7 +34,7 @@ public class BookDTO
     }
 
 
-    public BookDTO(Long bookId, String googleBooksId, String isbn10, String isbn13, String title, String subtitle, String synopsis, String language, Integer pageCount, Double averageRating, String cover)
+    public BookDTO(Long bookId, String googleBooksId, String isbn10, String isbn13, String title, String subtitle, String description, String language, Integer pageCount, Double averageRating, String cover)
     {
         this.googleBooksId = googleBooksId;
         this.bookId = bookId;
@@ -42,7 +42,7 @@ public class BookDTO
         this.isbn13 = isbn13;
         this.title = title;
         this.subtitle = subtitle;
-        this.synopsis = synopsis;
+        this.description = description;
         this.language = language;
         this.pageCount = pageCount;
         this.averageRating = averageRating;
@@ -73,7 +73,7 @@ public class BookDTO
 
     public String getSubtitle() { return subtitle; }
 
-    public String getSynopsis() { return synopsis; }
+    public String getDescription() { return description; }
 
     public String getLanguage() { return language; }
 
@@ -92,7 +92,7 @@ public class BookDTO
         private String isbn13;
         private String title;
         private String subtitle;
-        private String synopsis;
+        private String description;
         private String language;
         private Integer pageCount;
         private Double averageRating;
@@ -141,9 +141,9 @@ public class BookDTO
         }
 
 
-        public BookDTOBuilder setSynopsis(String synopsis)
+        public BookDTOBuilder setDescription(String description)
         {
-            this.synopsis = synopsis;
+            this.description = description;
             return this;
         }
 
@@ -178,7 +178,7 @@ public class BookDTO
 
         public BookDTO createBookDTO()
         {
-            return new BookDTO(bookId, googleBooksId, isbn10, isbn13, title, subtitle, synopsis, language, pageCount, averageRating, cover);
+            return new BookDTO(bookId, googleBooksId, isbn10, isbn13, title, subtitle, description, language, pageCount, averageRating, cover);
         }
 
     }

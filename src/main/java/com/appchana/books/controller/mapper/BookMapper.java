@@ -11,7 +11,7 @@ public class BookMapper
 {
     public static Book makeBook(BookDTO bookDTO)
     {
-        return new Book(bookDTO.getGoogleBooksId(), bookDTO.getIsbn10(), bookDTO.getIsbn13(), bookDTO.getTitle(), bookDTO.getSubtitle(), bookDTO.getSynopsis(), bookDTO.getLanguage(), bookDTO.getPageCount(), bookDTO.getAverageRating(), bookDTO.getCover());
+        return new Book(bookDTO.getGoogleBooksId(), bookDTO.getIsbn10(), bookDTO.getIsbn13(), bookDTO.getTitle(), bookDTO.getSubtitle(), bookDTO.getDescription(), bookDTO.getLanguage(), bookDTO.getPageCount(), bookDTO.getAverageRating(), bookDTO.getCover());
     }
 
     public static BookDTO makeBookDTO(Book book)
@@ -23,7 +23,7 @@ public class BookMapper
             .setIsbn13(book.getIsbn13())
             .setTitle(book.getTitle())
             .setSubtitle(book.getSubtitle())
-            .setSynopsis(book.getSynopsis())
+            .setDescription(book.getDescription())
             .setLanguage(book.getLanguage())
             .setPageCount(book.getPageCount())
             .setAverageRating(book.getAverageRating())
