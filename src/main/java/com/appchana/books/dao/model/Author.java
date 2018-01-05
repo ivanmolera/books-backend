@@ -6,7 +6,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(
@@ -25,6 +27,8 @@ public class Author
     private String biography;
     private Date birthDate;
     private Boolean deleted = false;
+
+    List<Book> books = new ArrayList<Book>();
 
     private Author()
     {
@@ -129,4 +133,27 @@ public class Author
     public Boolean getDeleted() { return deleted; }
 
     public void setDeleted(Boolean deleted) { this.deleted = deleted; }
+
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    @JoinTable(
+            name = "authors_books",
+            joinColumns = @JoinColumn(name = "author_id"),
+            inverseJoinColumns = @JoinColumn(name = "book_id")
+    )
+    public List<Book> getBooks() {
+        return books;
+    }
+
+    public void setBooks(List<Book> books) {
+        this.books = books;
+    }
+
+
+    public void addBook(Book book) {
+        if(this.books == null) {
+            this.books = new ArrayList<Book>();
+        }
+        this.books.add(book);
+    }
 }

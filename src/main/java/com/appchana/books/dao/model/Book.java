@@ -35,6 +35,7 @@ public class Book
     private Boolean deleted = false;
 
     private List<UserBook> userBooks = new ArrayList<UserBook>();
+    private List<Author> authors = new ArrayList<Author>();
 
     private Book()
     {
@@ -169,5 +170,20 @@ public class Book
 
     public void setUserBooks(List<UserBook> userBooks) {
         this.userBooks = userBooks;
+    }
+
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    @JoinTable(
+            name = "authors_books",
+            joinColumns = @JoinColumn(name = "book_id"),
+            inverseJoinColumns = @JoinColumn(name = "author_id")
+    )
+    public List<Author> getAuthors() {
+        return authors;
+    }
+
+    public void setAuthors(List<Author> authors) {
+        this.authors = authors;
     }
 }
