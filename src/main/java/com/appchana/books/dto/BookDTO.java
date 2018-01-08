@@ -1,6 +1,10 @@
 package com.appchana.books.dto;
 
+import com.appchana.books.controller.mapper.AuthorMapper;
+import com.appchana.books.dao.model.Author;
+
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 //@JsonInclude(JsonInclude.Include.NON_NULL)
 public class BookDTO
@@ -29,12 +33,14 @@ public class BookDTO
 
     private String cover;
 
+    private List<AuthorDTO> authors;
+
     private BookDTO()
     {
     }
 
 
-    public BookDTO(Long bookId, String googleBooksId, String isbn10, String isbn13, String title, String subtitle, String description, String language, Integer pageCount, Double averageRating, String cover)
+    public BookDTO(Long bookId, String googleBooksId, String isbn10, String isbn13, String title, String subtitle, String description, String language, Integer pageCount, Double averageRating, String cover, List<AuthorDTO> authors)
     {
         this.googleBooksId = googleBooksId;
         this.bookId = bookId;
@@ -47,6 +53,7 @@ public class BookDTO
         this.pageCount = pageCount;
         this.averageRating = averageRating;
         this.cover = cover;
+        this.authors = authors;
     }
 
 
@@ -83,6 +90,8 @@ public class BookDTO
 
     public String getCover() { return cover; }
 
+    public List<AuthorDTO> getAuthors() { return authors; };
+
 
     public static class BookDTOBuilder
     {
@@ -97,6 +106,7 @@ public class BookDTO
         private Integer pageCount;
         private Double averageRating;
         private String cover;
+        private List<AuthorDTO> authors;
 
 
         public BookDTOBuilder setBookId(Long bookId)
@@ -176,9 +186,16 @@ public class BookDTO
         }
 
 
+        public BookDTOBuilder setAuthors(List<Author> authors)
+        {
+            this.authors = AuthorMapper.makeAuthorDTOList(authors);
+            return this;
+        }
+
+
         public BookDTO createBookDTO()
         {
-            return new BookDTO(bookId, googleBooksId, isbn10, isbn13, title, subtitle, description, language, pageCount, averageRating, cover);
+            return new BookDTO(bookId, googleBooksId, isbn10, isbn13, title, subtitle, description, language, pageCount, averageRating, cover, authors);
         }
 
     }

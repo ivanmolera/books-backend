@@ -1,12 +1,15 @@
 package com.appchana.books.googlebooks;
 
 import com.appchana.books.common.Constants;
+import com.appchana.books.dao.model.Author;
 import com.appchana.books.util.JsonReader;
 import com.appchana.books.dao.model.Book;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by ivanmolera on 21/12/2017.
@@ -30,8 +33,6 @@ public class GoogleBooksAPIService {
         JSONObject volumeInfo = (JSONObject) jsonObject.get("volumeInfo");
 
         String title          = (String) volumeInfo.get("title");
-
-        // TODO: get author info
 
         return new Book(googleBooksId, title);
     }
@@ -93,8 +94,23 @@ public class GoogleBooksAPIService {
             cover = (String) imageLinks.get("thumbnail");
         }
 
-        return new Book(googleBooksId, isbn10, isbn13, title, subtitle, description, language, pageCount, averageRating, cover);
+        Book book = new Book(googleBooksId, isbn10, isbn13, title, subtitle, description, language, pageCount, averageRating, cover);
+
+        List<Author> authors = parseAuthors(volumeInfo);
+        book.setAuthors(authors);
+
+        return book;
+    }
+
+    public static List<Author> parseAuthors(JSONObject volumeInfo)
+    {
+        List<Author> authors = new ArrayList<Author>();
+        if(volumeInfo.has("authors")) {
+            JSONArray jsonObjectAuthors = (JSONArray) volumeInfo.get("authors");
+            String authorName = (String) jsonObjectAuthors.get(0);
+            Author author = new Author(authorName, authorName);
+            authors.add(author);
+        }
+        return authors;
     }
 }
-
-

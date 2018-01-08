@@ -27,7 +27,8 @@ public class BookMapper
             .setLanguage(book.getLanguage())
             .setPageCount(book.getPageCount())
             .setAverageRating(book.getAverageRating())
-            .setCover(book.getCover());
+            .setCover(book.getCover())
+            .setAuthors(book.getAuthors());
 
         return bookDTOBuilder.createBookDTO();
     }
