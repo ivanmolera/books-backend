@@ -47,9 +47,10 @@ public class BookController
     }
 
     @DeleteMapping("/{id}")
-    public void deleteBook(@Valid @PathVariable String id) throws EntityNotFoundException
+    public String deleteBook(@Valid @PathVariable String id) throws EntityNotFoundException
     {
         bookService.delete(id);
+        return "Book deleted";
     }
 
     @GetMapping

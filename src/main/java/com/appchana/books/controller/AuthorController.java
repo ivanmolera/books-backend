@@ -49,9 +49,10 @@ public class AuthorController
     }
 
     @DeleteMapping("/{id}")
-    public void deleteAuthor(@Valid @PathVariable String id) throws EntityNotFoundException
+    public String deleteAuthor(@Valid @PathVariable String id) throws EntityNotFoundException
     {
         authorService.delete(id);
+        return "Author deleted";
     }
 
     /*

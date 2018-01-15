@@ -40,10 +40,10 @@ public class UserController
     }
 
     /*
-    @GetMapping("/{userId}/books")
-    public List<BookDTO> getUserBooks(@Valid @PathVariable long userId) throws EntityNotFoundException
+    @GetMapping("/{id}/books")
+    public List<BookDTO> getUserBooks(@Valid @PathVariable String id) throws EntityNotFoundException
     {
-        User user = userService.find(userId);
+        User user = userService.find(id);
         return BookMapper.makeBookDTOList(user.getBooks());
     }
     */
@@ -58,9 +58,10 @@ public class UserController
 
 
     @DeleteMapping("/{id}")
-    public void deleteUser(@Valid @PathVariable String id) throws EntityNotFoundException
+    public String deleteUser(@Valid @PathVariable String id) throws EntityNotFoundException
     {
         userService.delete(id);
+        return "User deleted";
     }
 
 
