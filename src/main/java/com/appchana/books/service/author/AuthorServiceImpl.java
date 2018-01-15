@@ -32,14 +32,14 @@ public class AuthorServiceImpl implements AuthorService {
     /**
      * Selects a author by id.
      *
-     * @param authorId
+     * @param id
      * @return found author
      * @throws EntityNotFoundException if no author with the given id was found.
      */
     @Override
-    public Author find(Long authorId) throws EntityNotFoundException
+    public Author find(String id) throws EntityNotFoundException
     {
-        return findAuthorChecked(authorId);
+        return findAuthorChecked(id);
     }
 
     /**
@@ -74,14 +74,14 @@ public class AuthorServiceImpl implements AuthorService {
     /**
      * Deletes an existing author by id.
      *
-     * @param authorId
+     * @param id
      * @throws EntityNotFoundException if no author with the given id was found.
      */
     @Override
     @Transactional
-    public void delete(Long authorId) throws EntityNotFoundException
+    public void delete(String id) throws EntityNotFoundException
     {
-        Author author = findAuthorChecked(authorId);
+        Author author = findAuthorChecked(id);
         author.setDeleted(true);
     }
 
@@ -98,12 +98,12 @@ public class AuthorServiceImpl implements AuthorService {
         return authorsList;
     }
 
-    private Author findAuthorChecked(Long authorId) throws EntityNotFoundException
+    private Author findAuthorChecked(String id) throws EntityNotFoundException
     {
-        Author author = authorRepository.findOne(authorId);
+        Author author = authorRepository.findOne(id);
         if (author == null)
         {
-            throw new EntityNotFoundException("Could not find entity with id: " + authorId);
+            throw new EntityNotFoundException("Could not find entity with id: " + id);
         }
         return author;
     }

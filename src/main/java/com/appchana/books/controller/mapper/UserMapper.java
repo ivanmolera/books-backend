@@ -11,7 +11,7 @@ public class UserMapper
 {
     public static User makeUser(UserDTO userDTO)
     {
-        return new User(userDTO.getUsername(), userDTO.getPassword());
+        return new User(userDTO.getUsername(), userDTO.getPassword(), userDTO.getOnlineStatus());
     }
 
 
@@ -20,7 +20,8 @@ public class UserMapper
         UserDTO.UserDTOBuilder userDTOBuilder = UserDTO.newBuilder()
             .setId(user.getId())
             .setPassword(user.getPassword())
-            .setUsername(user.getUsername());
+            .setUsername(user.getUsername())
+            .setOnlineStatus(user.getOnlineStatus());
 
         return userDTOBuilder.createUserDTO();
     }

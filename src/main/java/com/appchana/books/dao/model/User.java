@@ -1,18 +1,14 @@
 package com.appchana.books.dao.model;
 
 import com.appchana.books.domainvalue.OnlineStatus;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.annotation.Id;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotNull;
-import java.time.ZonedDateTime;
 
 public class User
 {
     @Id
     private String id;
-    private ZonedDateTime dateCreated = ZonedDateTime.now();
     private String username;
     private String password;
     private Boolean deleted = false;
@@ -31,6 +27,14 @@ public class User
         this.onlineStatus = OnlineStatus.OFFLINE;
     }
 
+    public User(String username, String password, OnlineStatus onlineStatus)
+    {
+        this.username = username;
+        this.password = password;
+        this.deleted = false;
+        this.onlineStatus = onlineStatus != null ? onlineStatus : OnlineStatus.OFFLINE;
+    }
+
 
     public String getId() {
         return id;
@@ -38,16 +42,6 @@ public class User
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    @JsonIgnore
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-    public ZonedDateTime getDateCreated() {
-        return dateCreated;
-    }
-
-    public void setDateCreated(ZonedDateTime dateCreated) {
-        this.dateCreated = dateCreated;
     }
 
     @NotNull(message = "Username can not be null!")

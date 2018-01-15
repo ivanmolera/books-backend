@@ -1,6 +1,6 @@
 package com.appchana.books.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.appchana.books.domainvalue.OnlineStatus;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import javax.validation.constraints.NotNull;
@@ -11,17 +11,19 @@ public class UserDTO
     private String id;
     private String username;
     private String password;
+    private OnlineStatus onlineStatus;
 
     private UserDTO()
     {
     }
 
 
-    private UserDTO(String id, String username, String password)
+    private UserDTO(String id, String username, String password, OnlineStatus onlineStatus)
     {
         this.id = id;
         this.username = username;
         this.password = password;
+        this.onlineStatus = onlineStatus;
     }
 
 
@@ -31,7 +33,7 @@ public class UserDTO
     }
 
 
-    public String getiId()
+    public String getId()
     {
         return id;
     }
@@ -42,19 +44,23 @@ public class UserDTO
         return username;
     }
 
-    @JsonIgnore
+    //@JsonIgnore
     @NotNull(message = "Password can not be null!")
     public String getPassword()
     {
         return password;
     }
 
+    public OnlineStatus getOnlineStatus() {
+        return onlineStatus;
+    }
 
     public static class UserDTOBuilder
     {
         private String id;
         private String username;
         private String password;
+        private OnlineStatus onlineStatus;
 
 
         public UserDTOBuilder setId(String id)
@@ -78,9 +84,16 @@ public class UserDTO
         }
 
 
+        public UserDTOBuilder setOnlineStatus(OnlineStatus onlineStatus)
+        {
+            this.onlineStatus = onlineStatus;
+            return this;
+        }
+
+
         public UserDTO createUserDTO()
         {
-            return new UserDTO(id, username, password);
+            return new UserDTO(id, username, password, onlineStatus);
         }
 
     }

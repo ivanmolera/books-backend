@@ -35,14 +35,14 @@ public class UserServiceImpl implements UserService
     /**
      * Selects a user by id.
      *
-     * @param userId
+     * @param id
      * @return found user
      * @throws EntityNotFoundException if no user with the given id was found.
      */
     @Override
-    public User find(Long userId) throws EntityNotFoundException
+    public User find(String id) throws EntityNotFoundException
     {
-        return findUserChecked(userId);
+        return findUserChecked(id);
     }
 
 
@@ -57,15 +57,19 @@ public class UserServiceImpl implements UserService
     public User create(User user) throws ConstraintsViolationException
     {
         User newUser = null;
-        try
-        {
-            //user.setPassword(passwordEncoder.encode(user.getPassword()));
-            newUser = userRepository.save(user);
+        if(this.findByUsername(user.getUsername()) != null) {
+            String message = "A user already exists with the given username: " + user.getUsername();
+            LOG.warn(message);
+            throw new ConstraintsViolationException(message);
         }
-        catch (DataIntegrityViolationException e)
-        {
-            LOG.warn("Some constraints are thrown due to user creation", e);
-            throw new ConstraintsViolationException(e.getMessage());
+        else {
+            try {
+                //user.setPassword(passwordEncoder.encode(user.getPassword()));
+                newUser = userRepository.save(user);
+            } catch (DataIntegrityViolationException e) {
+                LOG.warn("Some constraints are thrown due to user creation", e);
+                throw new ConstraintsViolationException(e.getMessage());
+            }
         }
         return newUser;
     }
@@ -74,14 +78,14 @@ public class UserServiceImpl implements UserService
     /**
      * Deletes an existing user by id.
      *
-     * @param userId
+     * @param id
      * @throws EntityNotFoundException if no user with the given id was found.
      */
     @Override
     @Transactional
-    public void delete(Long userId) throws EntityNotFoundException
+    public void delete(String id) throws EntityNotFoundException
     {
-        User user = findUserChecked(userId);
+        User user = findUserChecked(id);
         user.setDeleted(true);
     }
 
@@ -98,12 +102,24 @@ public class UserServiceImpl implements UserService
     }
 
 
-    private User findUserChecked(Long userId) throws EntityNotFoundException
+    /**
+     * Find all users by online state.
+     *
+     * @param username
+     */
+    @Override
+    public User findByUsername(String username)
     {
-        User user = userRepository.findOne(userId);
+        return userRepository.findByUsername(username);
+    }
+
+
+    private User findUserChecked(String id) throws EntityNotFoundException
+    {
+        User user = userRepository.findOne(id);
         if (user == null)
         {
-            throw new EntityNotFoundException("Could not find user with id: " + userId);
+            throw new EntityNotFoundException("Could not find user with id: " + id);
         }
         return user;
     }

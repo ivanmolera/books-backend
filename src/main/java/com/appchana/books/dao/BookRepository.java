@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Database Access Object for book table.
  */
-public interface BookRepository extends CrudRepository<Book, String>
+public interface BookRepository extends MongoRepository<Book, String>
 {
     List<Book> findByIsbn10(String isbn10);
 

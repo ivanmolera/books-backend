@@ -9,11 +9,13 @@ import java.util.List;
 
 public interface UserService  {
 
-    User find(Long userId) throws EntityNotFoundException;
+    User find(String id) throws EntityNotFoundException;
 
     User create(User user) throws ConstraintsViolationException;
 
-    void delete(Long userId) throws EntityNotFoundException;
+    void delete(String id) throws EntityNotFoundException;
 
     List<User> find(OnlineStatus onlineStatus);
+
+    User findByUsername(String username);
 }

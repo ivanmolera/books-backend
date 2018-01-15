@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Database Access Object for authors table.
  */
-public interface AuthorRepository extends CrudRepository<Author, Long>
+public interface AuthorRepository extends CrudRepository<Author, String>
 {
     List<Author> findByNameAndSurname(String name, String surname);
 

@@ -1,18 +1,14 @@
 package com.appchana.books.dao.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.annotation.Id;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotNull;
-import java.time.ZonedDateTime;
 import java.util.Date;
 
 public class Author
 {
     @Id
     private String id;
-    private ZonedDateTime dateCreated = ZonedDateTime.now();
     private String name;
     private String surname;
     private String country;
@@ -48,16 +44,6 @@ public class Author
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    @JsonIgnore
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-    public ZonedDateTime getDateCreated() {
-        return dateCreated;
-    }
-
-    public void setDateCreated(ZonedDateTime dateCreated) {
-        this.dateCreated = dateCreated;
     }
 
 

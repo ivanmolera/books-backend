@@ -34,10 +34,10 @@ public class AuthorController
     }
 
 
-    @GetMapping("/{authorId}")
-    public AuthorDTO getAuthor(@Valid @PathVariable long authorId) throws EntityNotFoundException
+    @GetMapping("/{id}")
+    public AuthorDTO getAuthor(@Valid @PathVariable String id) throws EntityNotFoundException
     {
-        return AuthorMapper.makeAuthorDTO(authorService.find(authorId));
+        return AuthorMapper.makeAuthorDTO(authorService.find(id));
     }
 
     @PostMapping
@@ -48,17 +48,17 @@ public class AuthorController
         return AuthorMapper.makeAuthorDTO(authorService.create(author));
     }
 
-    @DeleteMapping("/{authorId}")
-    public void deleteAuthor(@Valid @PathVariable long authorId) throws EntityNotFoundException
+    @DeleteMapping("/{id}")
+    public void deleteAuthor(@Valid @PathVariable String id) throws EntityNotFoundException
     {
-        authorService.delete(authorId);
+        authorService.delete(id);
     }
 
     /*
-    @GetMapping("/{authorId}/books")
-    public List<BookDTO> getAuthorBooks(@Valid @PathVariable long authorId) throws EntityNotFoundException
+    @GetMapping("/{id}/books")
+    public List<BookDTO> getAuthorBooks(@Valid @PathVariable String id) throws EntityNotFoundException
     {
-        Author author = authorService.find(authorId);
+        Author author = authorService.find(id);
         return BookMapper.makeBookDTOList(author.getBooks());
     }
     */

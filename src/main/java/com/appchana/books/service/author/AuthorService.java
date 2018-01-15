@@ -12,11 +12,11 @@ import java.util.List;
  * Created by ivanmolera on 05/01/2018.
  */
 public interface AuthorService {
-    Author find(Long authorId) throws EntityNotFoundException;
+    Author find(String id) throws EntityNotFoundException;
 
     Author create(Author author) throws IOException, ConstraintsViolationException, InvalidIdentifierException;
 
-    void delete(Long authorId) throws EntityNotFoundException;
+    void delete(String id) throws EntityNotFoundException;
 
     List<Author> find(String name, String surname) throws InvalidIdentifierException;
 }

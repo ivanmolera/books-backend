@@ -9,7 +9,6 @@ public class Book
 {
     @Id
     private String id;
-    //private ZonedDateTime dateCreated = ZonedDateTime.now();
     private String googleBooksId;
     private String isbn10;
     private String isbn13;

@@ -33,10 +33,10 @@ public class UserController
         this.userService = userService;
     }
 
-    @GetMapping("/{userId}")
-    public UserDTO getUser(@Valid @PathVariable long userId) throws EntityNotFoundException
+    @GetMapping("/{id}")
+    public UserDTO getUser(@Valid @PathVariable String id) throws EntityNotFoundException
     {
-        return UserMapper.makeUserDTO(userService.find(userId));
+        return UserMapper.makeUserDTO(userService.find(id));
     }
 
     /*
@@ -57,10 +57,10 @@ public class UserController
     }
 
 
-    @DeleteMapping("/{userId}")
-    public void deleteUser(@Valid @PathVariable long userId) throws EntityNotFoundException
+    @DeleteMapping("/{id}")
+    public void deleteUser(@Valid @PathVariable String id) throws EntityNotFoundException
     {
-        userService.delete(userId);
+        userService.delete(id);
     }
 
 
