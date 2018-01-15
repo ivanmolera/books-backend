@@ -2,9 +2,11 @@ package com.appchana.books.dao.model;
 
 import com.appchana.books.domainvalue.ConditionType;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.NotNull;
 
+@Document(collection = "books")
 public class Book
 {
     @Id

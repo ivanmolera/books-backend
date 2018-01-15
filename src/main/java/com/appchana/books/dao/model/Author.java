@@ -1,10 +1,12 @@
 package com.appchana.books.dao.model;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
+@Document(collection = "authors")
 public class Author
 {
     @Id
