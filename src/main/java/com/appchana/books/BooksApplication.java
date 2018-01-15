@@ -1,9 +1,25 @@
 package com.appchana.books;
 
+import com.appchana.books.dao.UserRepository;
+import com.appchana.books.dao.model.User;
 import com.appchana.books.util.LoggingInterceptor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.authentication.configurers.GlobalAuthenticationConfigurerAdapter;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import springfox.documentation.builders.PathSelectors;
@@ -38,19 +54,17 @@ public class BooksApplication extends WebMvcConfigurerAdapter {
 				.apiInfo(generateApiInfo());
 	}
 
-/*
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-*/
 
 	private ApiInfo generateApiInfo()
 	{
 		return new ApiInfo("Books API Service", "API to manage books and all related entities", "Version 1.0 - mw",
 				"urn:tos", "ivan.molera@gmail.com", "Apache 2.0", "http://www.apache.org/licenses/LICENSE-2.0");
 	}
-/*
+
 	@Configuration
 	class WebSecurityConfiguration extends GlobalAuthenticationConfigurerAdapter
 	{
@@ -105,5 +119,4 @@ public class BooksApplication extends WebMvcConfigurerAdapter {
 		}
 
 	}
-*/
 }
