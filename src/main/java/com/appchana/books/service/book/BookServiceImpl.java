@@ -36,14 +36,14 @@ public class BookServiceImpl implements BookService
     /**
      * Selects a book by id.
      *
-     * @param bookId
+     * @param id
      * @return found book
      * @throws EntityNotFoundException if no book with the given id was found.
      */
     @Override
-    public Book find(Long bookId) throws EntityNotFoundException
+    public Book find(String id) throws EntityNotFoundException
     {
-        return findBookChecked(bookId);
+        return findBookChecked(id);
     }
 
     /**
@@ -58,7 +58,7 @@ public class BookServiceImpl implements BookService
     {
         Book newBook = null;
 
-        List<Book> booksList = this.find(CheckISBN.getISBN(book));
+        List<Book> booksList = this.findByISBN(CheckISBN.getISBN(book));
         if(booksList != null && !booksList.isEmpty()) {
             String message = "A book already exists with the given ISBN: " + book.getIsbn10();
             LOG.warn(message);
@@ -88,15 +88,15 @@ public class BookServiceImpl implements BookService
     /**
      * Deletes an existing book by id.
      *
-     * @param bookId
+     * @param id
      * @throws EntityNotFoundException if no book with the given id was found.
      */
     @Override
     @Transactional
-    public void delete(Long bookId) throws EntityNotFoundException
+    public void delete(String id) throws EntityNotFoundException
     {
-        Book book = findBookChecked(bookId);
-        book.setDeleted(true);
+        Book book = findBookChecked(id);
+        bookRepository.delete(book);
     }
 
     /**
@@ -105,7 +105,7 @@ public class BookServiceImpl implements BookService
      * @param isbn
      */
     @Override
-    public List<Book> find(String isbn) throws InvalidIdentifierException
+    public List<Book> findByISBN(String isbn) throws InvalidIdentifierException
     {
         List<Book> booksList;
         String isbnType = CheckISBN.getISBNType(isbn);
@@ -123,12 +123,12 @@ public class BookServiceImpl implements BookService
         return booksList;
     }
 
-    private Book findBookChecked(Long bookId) throws EntityNotFoundException
+    private Book findBookChecked(String id) throws EntityNotFoundException
     {
-        Book book = bookRepository.findOne(bookId);
+        Book book = bookRepository.findOne(id);
         if (book == null)
         {
-            throw new EntityNotFoundException("Could not find entity with id: " + bookId);
+            throw new EntityNotFoundException("Could not find entity with id: " + id);
         }
         return book;
     }

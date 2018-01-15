@@ -1,27 +1,15 @@
 package com.appchana.books.dao.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.springframework.format.annotation.DateTimeFormat;
+import com.appchana.books.domainvalue.ConditionType;
+import org.springframework.data.annotation.Id;
 
-import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.time.ZonedDateTime;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
-@Entity
-@Table(
-    name = "books", uniqueConstraints = {
-        @UniqueConstraint(name = "uc_books_isbn10", columnNames = "isbn10"),
-        @UniqueConstraint(name = "uc_books_isbn13", columnNames = "isbn13")
-    }
-)
 public class Book
 {
-    private Long bookId;
-    private ZonedDateTime dateCreated = ZonedDateTime.now();
+    @Id
+    private String id;
+    //private ZonedDateTime dateCreated = ZonedDateTime.now();
     private String googleBooksId;
     private String isbn10;
     private String isbn13;
@@ -33,9 +21,10 @@ public class Book
     private Double averageRating;
     private String cover;
     private Boolean deleted = false;
-
-    private List<UserBook> userBooks = new ArrayList<UserBook>();
-    private List<Author> authors = new ArrayList<Author>();
+    private ConditionType conditionType;
+    private String picture01;
+    private String picture02;
+    private String picture03;
 
     private Book()
     {
@@ -47,7 +36,7 @@ public class Book
         this.title = title;
     }
 
-    public Book(String googleBooksId, String isbn10, String isbn13, String title, String subtitle, String description, String language, Integer pageCount, Double averageRating, String cover)
+    public Book(String googleBooksId, String isbn10, String isbn13, String title, String subtitle, String description, String language, Integer pageCount, Double averageRating, String cover, ConditionType conditionType, String picture01, String picture02, String picture03)
     {
         this.googleBooksId = googleBooksId;
         this.isbn10 = isbn10;
@@ -60,25 +49,19 @@ public class Book
         this.averageRating = averageRating;
         this.cover = cover;
         this.deleted = false;
+        this.conditionType = conditionType;
+        this.picture01 = picture01;
+        this.picture02 = picture02;
+        this.picture03 = picture03;
     }
 
 
-    @Id
-    @GeneratedValue
-    @Column(name = "book_id")
-    public Long getBookId() { return bookId; }
-
-    public void setBookId(Long bookId) { this.bookId = bookId; }
-
-    @JsonIgnore
-    @Column(nullable = false)
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-    public ZonedDateTime getDateCreated() {
-        return dateCreated;
+    public String getId() {
+        return id;
     }
 
-    public void setDateCreated(ZonedDateTime dateCreated) {
-        this.dateCreated = dateCreated;
+    public void setId(String id) {
+        this.id = id;
     }
 
 
@@ -91,7 +74,6 @@ public class Book
     }
 
 
-    @Column(nullable = false)
     @NotNull(message = "ISBN-10 can not be null!")
     public String getIsbn10() { return isbn10; }
 
@@ -103,7 +85,6 @@ public class Book
     public void setIsbn13(String isbn13) { this.isbn13 = isbn13; }
 
 
-    @Column(nullable = false)
     @NotNull(message = "Title can not be null!")
     public String getTitle() { return title; }
 
@@ -156,33 +137,43 @@ public class Book
     }
 
 
-    @Column(nullable = false)
     public Boolean getDeleted() { return deleted; }
 
     public void setDeleted(Boolean deleted) { this.deleted = deleted; }
 
 
-    @OneToMany(mappedBy = "book")
-    public List<UserBook> getUserBooks() {
-        return userBooks;
+    public ConditionType getConditionType() {
+        return conditionType;
     }
 
-    public void setUserBooks(List<UserBook> userBooks) {
-        this.userBooks = userBooks;
+    public void setConditionType(ConditionType conditionType) {
+        this.conditionType = conditionType;
     }
 
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
-    @JoinTable(
-            name = "authors_books",
-            joinColumns = @JoinColumn(name = "book_id"),
-            inverseJoinColumns = @JoinColumn(name = "author_id")
-    )
-    public List<Author> getAuthors() {
-        return authors;
+    public String getPicture01() {
+        return picture01;
     }
 
-    public void setAuthors(List<Author> authors) {
-        this.authors = authors;
+    public void setPicture01(String picture01) {
+        this.picture01 = picture01;
+    }
+
+
+    public String getPicture02() {
+        return picture02;
+    }
+
+    public void setPicture02(String picture02) {
+        this.picture02 = picture02;
+    }
+
+
+    public String getPicture03() {
+        return picture03;
+    }
+
+    public void setPicture03(String picture03) {
+        this.picture03 = picture03;
     }
 }

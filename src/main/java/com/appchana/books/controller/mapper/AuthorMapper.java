@@ -17,7 +17,7 @@ public class AuthorMapper
     public static AuthorDTO makeAuthorDTO(Author author)
     {
         AuthorDTO.AuthorDTOBuilder authorDTOBuilder = AuthorDTO.newBuilder()
-            .setAuthorId(author.getAuthorId())
+            .setId(author.getId())
             .setName(author.getName())
             .setSurname(author.getSurname())
             .setCountry(author.getCountry())

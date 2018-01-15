@@ -11,13 +11,13 @@ public class BookMapper
 {
     public static Book makeBook(BookDTO bookDTO)
     {
-        return new Book(bookDTO.getGoogleBooksId(), bookDTO.getIsbn10(), bookDTO.getIsbn13(), bookDTO.getTitle(), bookDTO.getSubtitle(), bookDTO.getDescription(), bookDTO.getLanguage(), bookDTO.getPageCount(), bookDTO.getAverageRating(), bookDTO.getCover());
+        return new Book(bookDTO.getGoogleBooksId(), bookDTO.getIsbn10(), bookDTO.getIsbn13(), bookDTO.getTitle(), bookDTO.getSubtitle(), bookDTO.getDescription(), bookDTO.getLanguage(), bookDTO.getPageCount(), bookDTO.getAverageRating(), bookDTO.getCover(), bookDTO.getConditionType(), bookDTO.getPicture01(), bookDTO.getPicture02(), bookDTO.getPicture03());
     }
 
     public static BookDTO makeBookDTO(Book book)
     {
         BookDTO.BookDTOBuilder bookDTOBuilder = BookDTO.newBuilder()
-            .setBookId(book.getBookId())
+            .setId(book.getId())
             .setGoogleBooksId(book.getGoogleBooksId())
             .setIsbn10(book.getIsbn10())
             .setIsbn13(book.getIsbn13())
@@ -28,7 +28,10 @@ public class BookMapper
             .setPageCount(book.getPageCount())
             .setAverageRating(book.getAverageRating())
             .setCover(book.getCover())
-            .setAuthors(book.getAuthors());
+            .setConditionType(book.getConditionType())
+            .setPicture01(book.getPicture01())
+            .setPicture02(book.getPicture02())
+            .setPicture03(book.getPicture03());
 
         return bookDTOBuilder.createBookDTO();
     }

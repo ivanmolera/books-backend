@@ -7,7 +7,7 @@ import java.util.Date;
 //@JsonInclude(JsonInclude.Include.NON_NULL)
 public class AuthorDTO
 {
-    private Long authorId;
+    private String id;
 
     private ZonedDateTime dateCreated = ZonedDateTime.now();
 
@@ -33,9 +33,9 @@ public class AuthorDTO
     }
 
 
-    public AuthorDTO(Long authorId, String name, String surname, String country, String language, String biography, Date birthDate)
+    public AuthorDTO(String id, String name, String surname, String country, String language, String biography, Date birthDate)
     {
-        this.authorId = authorId;
+        this.id = id;
         this.name = name;
         this.surname = surname;
         this.country = country;
@@ -50,8 +50,8 @@ public class AuthorDTO
     }
 
 
-    public Long getAuthorId() {
-        return authorId;
+    public String getId() {
+        return id;
     }
 
     public String getName() {
@@ -81,7 +81,7 @@ public class AuthorDTO
 
     public static class AuthorDTOBuilder
     {
-        private Long authorId;
+        private String id;
         private String name;
         private String surname;
         private String country;
@@ -90,9 +90,9 @@ public class AuthorDTO
         private Date birthDate;
 
 
-        public AuthorDTOBuilder setAuthorId(Long authorId)
+        public AuthorDTOBuilder setId(String id)
         {
-            this.authorId = authorId;
+            this.id = id;
             return this;
         }
 
@@ -141,7 +141,7 @@ public class AuthorDTO
 
         public AuthorDTO createAuthorDTO()
         {
-            return new AuthorDTO(authorId, name, surname, country, language, biography, birthDate);
+            return new AuthorDTO(id, name, surname, country, language, biography, birthDate);
         }
 
     }

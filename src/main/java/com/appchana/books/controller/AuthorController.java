@@ -2,12 +2,9 @@ package com.appchana.books.controller;
 
 import com.appchana.books.controller.mapper.AuthorMapper;
 import com.appchana.books.controller.mapper.BookMapper;
-import com.appchana.books.controller.mapper.UserBookMapper;
 import com.appchana.books.dao.model.Author;
-import com.appchana.books.dao.model.User;
 import com.appchana.books.dto.AuthorDTO;
 import com.appchana.books.dto.BookDTO;
-import com.appchana.books.dto.UserBookDTO;
 import com.appchana.books.exception.ConstraintsViolationException;
 import com.appchana.books.exception.EntityNotFoundException;
 import com.appchana.books.exception.InvalidIdentifierException;
@@ -57,12 +54,14 @@ public class AuthorController
         authorService.delete(authorId);
     }
 
+    /*
     @GetMapping("/{authorId}/books")
     public List<BookDTO> getAuthorBooks(@Valid @PathVariable long authorId) throws EntityNotFoundException
     {
         Author author = authorService.find(authorId);
         return BookMapper.makeBookDTOList(author.getBooks());
     }
+    */
 
     @GetMapping
     public List<AuthorDTO> findAuthors(@RequestParam String name, @RequestParam String surname) throws EntityNotFoundException, InvalidIdentifierException

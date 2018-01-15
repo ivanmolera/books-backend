@@ -32,10 +32,10 @@ public class BookController
     }
 
 
-    @GetMapping("/{bookId}")
-    public BookDTO getBook(@Valid @PathVariable long bookId) throws EntityNotFoundException
+    @GetMapping("/{id}")
+    public BookDTO getBook(@Valid @PathVariable String id) throws EntityNotFoundException
     {
-        return BookMapper.makeBookDTO(bookService.find(bookId));
+        return BookMapper.makeBookDTO(bookService.find(id));
     }
 
     @PostMapping
@@ -46,15 +46,15 @@ public class BookController
         return BookMapper.makeBookDTO(bookService.create(book));
     }
 
-    @DeleteMapping("/{bookId}")
-    public void deleteBook(@Valid @PathVariable long bookId) throws EntityNotFoundException
+    @DeleteMapping("/{id}")
+    public void deleteBook(@Valid @PathVariable String id) throws EntityNotFoundException
     {
-        bookService.delete(bookId);
+        bookService.delete(id);
     }
 
     @GetMapping
     public List<BookDTO> findBooks(@RequestParam String isbn) throws EntityNotFoundException, InvalidIdentifierException
     {
-        return BookMapper.makeBookDTOList(bookService.find(isbn));
+        return BookMapper.makeBookDTOList(bookService.findByISBN(isbn));
     }
 }

@@ -2,6 +2,7 @@ package com.appchana.books.googlebooks;
 
 import com.appchana.books.common.Constants;
 import com.appchana.books.dao.model.Author;
+import com.appchana.books.domainvalue.ConditionType;
 import com.appchana.books.util.JsonReader;
 import com.appchana.books.dao.model.Book;
 import org.json.JSONArray;
@@ -94,10 +95,7 @@ public class GoogleBooksAPIService {
             cover = (String) imageLinks.get("thumbnail");
         }
 
-        Book book = new Book(googleBooksId, isbn10, isbn13, title, subtitle, description, language, pageCount, averageRating, cover);
-
-        List<Author> authors = parseAuthors(volumeInfo);
-        book.setAuthors(authors);
+        Book book = new Book(googleBooksId, isbn10, isbn13, title, subtitle, description, language, pageCount, averageRating, cover, ConditionType.NEW, null, null, null);
 
         return book;
     }

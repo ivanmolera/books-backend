@@ -12,12 +12,12 @@ import java.util.List;
 public interface BookService
 {
 
-    Book find(Long bookId) throws EntityNotFoundException;
+    Book find(String id) throws EntityNotFoundException;
 
     Book create(Book book) throws IOException, ConstraintsViolationException, InvalidIdentifierException;
 
-    void delete(Long bookId) throws EntityNotFoundException;
+    void delete(String id) throws EntityNotFoundException;
 
-    List<Book> find(String isbn) throws InvalidIdentifierException;
+    List<Book> findByISBN(String isbn) throws InvalidIdentifierException;
 
 }

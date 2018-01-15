@@ -2,32 +2,21 @@ package com.appchana.books.dao.model;
 
 import com.appchana.books.domainvalue.OnlineStatus;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.data.annotation.Id;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
-@Entity
-@Table(
-    name = "users",
-    uniqueConstraints = @UniqueConstraint(name = "uc_users_username", columnNames = {"username"})
-)
 public class User
 {
-    private Long userId;
+    @Id
+    private String id;
     private ZonedDateTime dateCreated = ZonedDateTime.now();
     private String username;
     private String password;
     private Boolean deleted = false;
     private OnlineStatus onlineStatus;
-
-    private List<UserBook> userBooks = new ArrayList<UserBook>();
-
 
     private User()
     {
@@ -43,16 +32,15 @@ public class User
     }
 
 
-    @Id
-    @GeneratedValue
-    @Column(name = "user_id")
-    public Long getUserId() { return userId; }
+    public String getId() {
+        return id;
+    }
 
-    public void setUserId(Long userId) { this.userId = userId; }
-
+    public void setId(String id) {
+        this.id = id;
+    }
 
     @JsonIgnore
-    @Column(nullable = false)
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     public ZonedDateTime getDateCreated() {
         return dateCreated;
@@ -62,7 +50,6 @@ public class User
         this.dateCreated = dateCreated;
     }
 
-    @Column(nullable = false)
     @NotNull(message = "Username can not be null!")
     public String getUsername()
     {
@@ -74,7 +61,6 @@ public class User
     }
 
 
-    @Column(nullable = false)
     @NotNull(message = "Password can not be null!")
     public String getPassword()
     {
@@ -84,7 +70,6 @@ public class User
     public void setPassword(String password) { this.password = password; }
 
 
-    @Column(nullable = false)
     public Boolean getDeleted()
     {
         return deleted;
@@ -96,8 +81,6 @@ public class User
     }
 
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
     public OnlineStatus getOnlineStatus()
     {
         return onlineStatus;
@@ -106,15 +89,5 @@ public class User
     public void setOnlineStatus(OnlineStatus onlineStatus)
     {
         this.onlineStatus = onlineStatus;
-    }
-
-
-    @OneToMany(mappedBy = "user")
-    public List<UserBook> getUserBooks() {
-        return userBooks;
-    }
-
-    public void setUserBooks(List<UserBook> userBooks) {
-        this.userBooks = userBooks;
     }
 }

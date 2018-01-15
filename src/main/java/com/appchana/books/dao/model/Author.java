@@ -1,24 +1,17 @@
 package com.appchana.books.dao.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.data.annotation.Id;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
-@Entity
-@Table(
-    name = "authors", uniqueConstraints = {
-        @UniqueConstraint(name = "uc_authors_name", columnNames = {"name", "surname"})
-    }
-)
 public class Author
 {
-    private Long authorId;
+    @Id
+    private String id;
     private ZonedDateTime dateCreated = ZonedDateTime.now();
     private String name;
     private String surname;
@@ -27,8 +20,6 @@ public class Author
     private String biography;
     private Date birthDate;
     private Boolean deleted = false;
-
-    List<Book> books = new ArrayList<Book>();
 
     private Author()
     {
@@ -51,16 +42,15 @@ public class Author
         this.deleted = false;
     }
 
+    public String getId() {
+        return id;
+    }
 
-    @Id
-    @GeneratedValue
-    @Column(name = "author_id")
-    public Long getAuthorId() { return authorId; }
-
-    public void setAuthorId(Long authorId) { this.authorId = authorId; }
+    public void setId(String id) {
+        this.id = id;
+    }
 
     @JsonIgnore
-    @Column(nullable = false)
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     public ZonedDateTime getDateCreated() {
         return dateCreated;
@@ -71,7 +61,6 @@ public class Author
     }
 
 
-    @Column(nullable = false)
     @NotNull(message = "Author name can not be null!")
     public String getName() {
         return name;
@@ -82,7 +71,6 @@ public class Author
     }
 
 
-    @Column(nullable = false)
     @NotNull(message = "Author surname can not be null!")
     public String getSurname() {
         return surname;
@@ -129,31 +117,7 @@ public class Author
     }
 
 
-    @Column(nullable = false)
     public Boolean getDeleted() { return deleted; }
 
     public void setDeleted(Boolean deleted) { this.deleted = deleted; }
-
-
-    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
-    @JoinTable(
-            name = "authors_books",
-            joinColumns = @JoinColumn(name = "author_id"),
-            inverseJoinColumns = @JoinColumn(name = "book_id")
-    )
-    public List<Book> getBooks() {
-        return books;
-    }
-
-    public void setBooks(List<Book> books) {
-        this.books = books;
-    }
-
-
-    public void addBook(Book book) {
-        if(this.books == null) {
-            this.books = new ArrayList<Book>();
-        }
-        this.books.add(book);
-    }
 }

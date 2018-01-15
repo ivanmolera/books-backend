@@ -2,14 +2,13 @@ package com.appchana.books.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.validation.constraints.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserDTO
 {
-    private Long userId;
+    private String id;
     private String username;
     private String password;
 
@@ -18,9 +17,9 @@ public class UserDTO
     }
 
 
-    private UserDTO(Long userId, String username, String password)
+    private UserDTO(String id, String username, String password)
     {
-        this.userId = userId;
+        this.id = id;
         this.username = username;
         this.password = password;
     }
@@ -32,9 +31,9 @@ public class UserDTO
     }
 
 
-    public Long getUserId()
+    public String getiId()
     {
-        return userId;
+        return id;
     }
 
     @NotNull(message = "Username can not be null!")
@@ -53,14 +52,14 @@ public class UserDTO
 
     public static class UserDTOBuilder
     {
-        private Long userId;
+        private String id;
         private String username;
         private String password;
 
 
-        public UserDTOBuilder setUserId(Long userId)
+        public UserDTOBuilder setId(String id)
         {
-            this.userId = userId;
+            this.id = id;
             return this;
         }
 
@@ -81,7 +80,7 @@ public class UserDTO
 
         public UserDTO createUserDTO()
         {
-            return new UserDTO(userId, username, password);
+            return new UserDTO(id, username, password);
         }
 
     }

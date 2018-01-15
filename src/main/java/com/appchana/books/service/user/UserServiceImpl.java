@@ -1,14 +1,12 @@
 package com.appchana.books.service.user;
 
+import com.appchana.books.dao.UserRepository;
+import com.appchana.books.dao.model.User;
 import com.appchana.books.domainvalue.OnlineStatus;
 import com.appchana.books.exception.ConstraintsViolationException;
 import com.appchana.books.exception.EntityNotFoundException;
-import com.appchana.books.dao.model.User;
-import com.appchana.books.dao.UserRepository;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,8 +20,11 @@ public class UserServiceImpl implements UserService
 
     private final UserRepository userRepository;
 
+
+    /*
     @Autowired
     private PasswordEncoder passwordEncoder;
+    */
 
     public UserServiceImpl(final UserRepository userRepository)
     {
@@ -58,7 +59,7 @@ public class UserServiceImpl implements UserService
         User newUser = null;
         try
         {
-            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            //user.setPassword(passwordEncoder.encode(user.getPassword()));
             newUser = userRepository.save(user);
         }
         catch (DataIntegrityViolationException e)
