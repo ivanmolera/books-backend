@@ -1,7 +1,5 @@
 package com.appchana.books.dto;
 
-import com.appchana.books.dao.model.Book;
-import com.appchana.books.dao.model.User;
 import com.appchana.books.domainvalue.ConditionType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -15,15 +13,15 @@ public class UserBookDTO
     private String picture01;
     private String picture02;
     private String picture03;
-    private User user;
-    private Book book;
+    private UserDTO user;
+    private BookDTO book;
 
     private UserBookDTO()
     {
     }
 
 
-    public UserBookDTO(Long userBookId, User user, Book book, ConditionType conditionType, String picture01, String picture02, String picture03)
+    public UserBookDTO(Long userBookId, UserDTO user, BookDTO book, ConditionType conditionType, String picture01, String picture02, String picture03)
     {
         this.userBookId = userBookId;
         this.user = user;
@@ -47,14 +45,13 @@ public class UserBookDTO
     }
 
     @JsonIgnore
-    @NotNull(message = "User can not be null!")
-    public User getUser()
+    public UserDTO getUser()
     {
         return user;
     }
 
     @NotNull(message = "Book can not be null!")
-    public Book getBook()
+    public BookDTO getBook()
     {
         return book;
     }
@@ -80,8 +77,8 @@ public class UserBookDTO
     public static class UserBookDTOBuilder
     {
         private Long userBookId;
-        private User user;
-        private Book book;
+        private UserDTO user;
+        private BookDTO book;
         private ConditionType conditionType;
         private String picture01;
         private String picture02;
@@ -95,14 +92,14 @@ public class UserBookDTO
         }
 
 
-        public UserBookDTOBuilder setUser(User user)
+        public UserBookDTOBuilder setUser(UserDTO user)
         {
             this.user = user;
             return this;
         }
 
 
-        public UserBookDTOBuilder setBook(Book book)
+        public UserBookDTOBuilder setBook(BookDTO book)
         {
             this.book = book;
             return this;

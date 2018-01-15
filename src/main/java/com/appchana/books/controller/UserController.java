@@ -1,16 +1,14 @@
 package com.appchana.books.controller;
 
-import com.appchana.books.controller.mapper.BookMapper;
 import com.appchana.books.controller.mapper.UserBookMapper;
 import com.appchana.books.controller.mapper.UserMapper;
-import com.appchana.books.dao.model.Book;
+import com.appchana.books.dao.model.User;
 import com.appchana.books.domainvalue.OnlineStatus;
-import com.appchana.books.dto.BookDTO;
 import com.appchana.books.dto.UserBookDTO;
 import com.appchana.books.dto.UserDTO;
 import com.appchana.books.exception.ConstraintsViolationException;
 import com.appchana.books.exception.EntityNotFoundException;
-import com.appchana.books.dao.model.User;
+import com.appchana.books.service.book.BookService;
 import com.appchana.books.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -36,7 +34,6 @@ public class UserController
         this.userService = userService;
     }
 
-
     @GetMapping("/{userId}")
     public UserDTO getUser(@Valid @PathVariable long userId) throws EntityNotFoundException
     {
@@ -50,13 +47,12 @@ public class UserController
         return UserBookMapper.makeUserBookDTOList(user.getUserBooks());
     }
 
-
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public UserDTO createUser(@Valid @RequestBody UserDTO userDTO) throws ConstraintsViolationException
     {
-        User userDO = UserMapper.makeUser(userDTO);
-        return UserMapper.makeUserDTO(userService.create(userDO));
+        User user = UserMapper.makeUser(userDTO);
+        return UserMapper.makeUserDTO(userService.create(user));
     }
 
 

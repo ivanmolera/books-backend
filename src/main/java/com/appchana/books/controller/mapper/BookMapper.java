@@ -17,8 +17,8 @@ public class BookMapper
     public static BookDTO makeBookDTO(Book book)
     {
         BookDTO.BookDTOBuilder bookDTOBuilder = BookDTO.newBuilder()
-            .setGoogleBooksId(book.getGoogleBooksId())
             .setBookId(book.getBookId())
+            .setGoogleBooksId(book.getGoogleBooksId())
             .setIsbn10(book.getIsbn10())
             .setIsbn13(book.getIsbn13())
             .setTitle(book.getTitle())

@@ -16,7 +16,6 @@ import java.time.ZonedDateTime;
 @Table(name = "users_books")
 public class UserBook {
 
-    @JsonIgnore
     private Long userBookId;
     private ZonedDateTime dateCreated = ZonedDateTime.now();
     private Boolean deleted = false;
@@ -110,6 +109,7 @@ public class UserBook {
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", nullable = false)
     @NotNull(message = "UserId can not be null!")
+    @JsonIgnore
     public User getUser() {
         return this.user;
     }
@@ -122,6 +122,7 @@ public class UserBook {
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "book_id", nullable = false)
     @NotNull(message = "BookId can not be null!")
+    @JsonIgnore
     public Book getBook() {
         return book;
     }

@@ -162,7 +162,6 @@ public class Book
     public void setDeleted(Boolean deleted) { this.deleted = deleted; }
 
 
-    @JsonIgnore
     @OneToMany(mappedBy = "book")
     public List<UserBook> getUserBooks() {
         return userBooks;

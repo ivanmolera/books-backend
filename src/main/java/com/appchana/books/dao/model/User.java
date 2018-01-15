@@ -109,7 +109,6 @@ public class User
     }
 
 
-    @JsonIgnore
     @OneToMany(mappedBy = "user")
     public List<UserBook> getUserBooks() {
         return userBooks;

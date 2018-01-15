@@ -10,27 +10,15 @@ import java.util.List;
 public class BookDTO
 {
     private Long bookId;
-
     private String googleBooksId;
-
-    @NotNull(message = "ISBN-10 can not be null!")
     private String isbn10;
-
     private String isbn13;
-
-    @NotNull(message = "Title type can not be null!")
     private String title;
-
     private String subtitle;
-
     private String description;
-
     private String language;
-
     private Integer pageCount;
-
     private Double averageRating;
-
     private String cover;
 
     private List<AuthorDTO> authors;
@@ -42,8 +30,8 @@ public class BookDTO
 
     public BookDTO(Long bookId, String googleBooksId, String isbn10, String isbn13, String title, String subtitle, String description, String language, Integer pageCount, Double averageRating, String cover, List<AuthorDTO> authors)
     {
-        this.googleBooksId = googleBooksId;
         this.bookId = bookId;
+        this.googleBooksId = googleBooksId;
         this.isbn10 = isbn10;
         this.isbn13 = isbn13;
         this.title = title;
@@ -72,10 +60,12 @@ public class BookDTO
         return googleBooksId;
     }
 
+    @NotNull(message = "ISBN-10 can not be null!")
     public String getIsbn10() { return isbn10; }
 
     public String getIsbn13() { return isbn13; }
 
+    @NotNull(message = "Title type can not be null!")
     public String getTitle() { return title; }
 
     public String getSubtitle() { return subtitle; }

@@ -20,8 +20,8 @@ public class UserBookMapper {
     {
         UserBookDTO.UserBookDTOBuilder userBookDTOBuilder = UserBookDTO.newBuilder()
                 .setUserBookId(userBook.getUserBookId())
-                .setUser(userBook.getUser())
-                .setBook(userBook.getBook())
+                .setUser(UserMapper.makeUserDTO(userBook.getUser()))
+                .setBook(BookMapper.makeBookDTO(userBook.getBook()))
                 .setConditionType(userBook.getConditionType())
                 .setPicture01(userBook.getPicture01())
                 .setPicture02(userBook.getPicture02())
