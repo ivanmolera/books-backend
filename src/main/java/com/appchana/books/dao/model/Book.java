@@ -5,6 +5,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Document(collection = "books")
 public class Book
@@ -27,6 +28,9 @@ public class Book
     private String picture02;
     private String picture03;
 
+    // Embedded documents
+    private List<Author> authors;
+
     private Book()
     {
     }
@@ -37,7 +41,7 @@ public class Book
         this.title = title;
     }
 
-    public Book(String googleBooksId, String isbn10, String isbn13, String title, String subtitle, String description, String language, Integer pageCount, Double averageRating, String cover, ConditionType conditionType, String picture01, String picture02, String picture03)
+    public Book(String googleBooksId, String isbn10, String isbn13, String title, String subtitle, String description, String language, Integer pageCount, Double averageRating, String cover, ConditionType conditionType, String picture01, String picture02, String picture03, List<Author> authors)
     {
         this.googleBooksId = googleBooksId;
         this.isbn10 = isbn10;
@@ -54,6 +58,7 @@ public class Book
         this.picture01 = picture01;
         this.picture02 = picture02;
         this.picture03 = picture03;
+        this.authors = authors;
     }
 
 
@@ -176,5 +181,14 @@ public class Book
 
     public void setPicture03(String picture03) {
         this.picture03 = picture03;
+    }
+
+
+    public List<Author> getAuthors() {
+        return authors;
+    }
+
+    public void setAuthors(List<Author> authors) {
+        this.authors = authors;
     }
 }

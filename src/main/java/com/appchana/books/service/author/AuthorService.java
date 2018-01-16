@@ -18,5 +18,7 @@ public interface AuthorService {
 
     void delete(String id) throws EntityNotFoundException;
 
-    List<Author> find(String name, String surname) throws InvalidIdentifierException;
+    List<Author> findByName(String name) throws InvalidIdentifierException;
+
+    List<Author> findByNameLike(String name) throws InvalidIdentifierException;
 }

@@ -54,9 +54,9 @@ public class AuthorServiceImpl implements AuthorService {
     {
         Author newAuthor = null;
 
-        List<Author> authorsList = authorRepository.findByNameAndSurname(author.getName(), author.getSurname());
+        List<Author> authorsList = authorRepository.findByNameLike(author.getName());
         if(authorsList != null && !authorsList.isEmpty()) {
-            String message = "A author already exists with the given name: " + author.getName() + " and surname:" + author.getSurname();
+            String message = "A author already exists with the given name: " + author.getName();
             LOG.warn(message);
             throw new ConstraintsViolationException(message);
         }
@@ -82,19 +82,30 @@ public class AuthorServiceImpl implements AuthorService {
     public void delete(String id) throws EntityNotFoundException
     {
         Author author = findAuthorChecked(id);
-        author.setDeleted(true);
+        authorRepository.delete(author);
     }
 
     /**
-     * Find all authors by name, surname, ...
+     * Find all authors by name, ...
      *
      * @param name
-     * @param surname
      */
     @Override
-    public List<Author> find(String name, String surname) throws InvalidIdentifierException
+    public List<Author> findByName(String name) throws InvalidIdentifierException
     {
-        List<Author> authorsList = authorRepository.findByNameAndSurname(name, surname);
+        List<Author> authorsList = authorRepository.findByName(name);
+        return authorsList;
+    }
+
+    /**
+     * Find all authors by name, ...
+     *
+     * @param name
+     */
+    @Override
+    public List<Author> findByNameLike(String name) throws InvalidIdentifierException
+    {
+        List<Author> authorsList = authorRepository.findByNameLike(name);
         return authorsList;
     }
 

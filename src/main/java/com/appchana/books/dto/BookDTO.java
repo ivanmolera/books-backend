@@ -3,6 +3,7 @@ package com.appchana.books.dto;
 import com.appchana.books.domainvalue.ConditionType;
 
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 //@JsonInclude(JsonInclude.Include.NON_NULL)
 public class BookDTO
@@ -23,12 +24,14 @@ public class BookDTO
     private String picture02;
     private String picture03;
 
+    List<AuthorDTO> authors;
+
     private BookDTO()
     {
     }
 
 
-    public BookDTO(String id, String googleBooksId, String isbn10, String isbn13, String title, String subtitle, String description, String language, Integer pageCount, Double averageRating, String cover, ConditionType conditionType, String picture01, String picture02, String picture03)
+    public BookDTO(String id, String googleBooksId, String isbn10, String isbn13, String title, String subtitle, String description, String language, Integer pageCount, Double averageRating, String cover, ConditionType conditionType, String picture01, String picture02, String picture03, List<AuthorDTO> authors)
     {
         this.id = id;
         this.googleBooksId = googleBooksId;
@@ -45,6 +48,7 @@ public class BookDTO
         this.picture01 = picture01;
         this.picture02 = picture02;
         this.picture03 = picture03;
+        this.authors = authors;
     }
 
 
@@ -98,6 +102,10 @@ public class BookDTO
         return picture03;
     }
 
+    public List<AuthorDTO> getAuthors() {
+        return authors;
+    }
+
     public static class BookDTOBuilder
     {
         private String id;
@@ -115,6 +123,7 @@ public class BookDTO
         private String picture01;
         private String picture02;
         private String picture03;
+        private List<AuthorDTO> authors;
 
 
         public BookDTOBuilder setId(String id)
@@ -222,9 +231,16 @@ public class BookDTO
         }
 
 
+        public BookDTOBuilder setAuthors(List<AuthorDTO> authors)
+        {
+            this.authors = authors;
+            return this;
+        }
+
+
         public BookDTO createBookDTO()
         {
-            return new BookDTO(id, googleBooksId, isbn10, isbn13, title, subtitle, description, language, pageCount, averageRating, cover, conditionType, picture01, picture02, picture03);
+            return new BookDTO(id, googleBooksId, isbn10, isbn13, title, subtitle, description, language, pageCount, averageRating, cover, conditionType, picture01, picture02, picture03, authors);
         }
 
     }

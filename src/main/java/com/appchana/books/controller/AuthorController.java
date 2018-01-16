@@ -65,8 +65,8 @@ public class AuthorController
     */
 
     @GetMapping
-    public List<AuthorDTO> findAuthors(@RequestParam String name, @RequestParam String surname) throws EntityNotFoundException, InvalidIdentifierException
+    public List<AuthorDTO> findAuthors(@RequestParam String name) throws EntityNotFoundException, InvalidIdentifierException
     {
-        return AuthorMapper.makeAuthorDTOList(authorService.find(name, surname));
+        return AuthorMapper.makeAuthorDTOList(authorService.findByNameLike(name));
     }
 }

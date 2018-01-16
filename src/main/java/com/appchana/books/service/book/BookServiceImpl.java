@@ -1,13 +1,14 @@
 package com.appchana.books.service.book;
 
 import com.appchana.books.common.Constants;
-import com.appchana.books.controller.mapper.BookMapper;
+import com.appchana.books.dao.AuthorRepository;
+import com.appchana.books.dao.BookRepository;
+import com.appchana.books.dao.model.Author;
+import com.appchana.books.dao.model.Book;
 import com.appchana.books.exception.ConstraintsViolationException;
 import com.appchana.books.exception.EntityNotFoundException;
 import com.appchana.books.exception.InvalidIdentifierException;
 import com.appchana.books.googlebooks.GoogleBooksAPIService;
-import com.appchana.books.dao.model.Book;
-import com.appchana.books.dao.BookRepository;
 import com.appchana.books.util.CheckISBN;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -17,21 +18,22 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class BookServiceImpl implements BookService
 {
-
     private static org.slf4j.Logger LOG = LoggerFactory.getLogger(BookServiceImpl.class);
 
     private final BookRepository bookRepository;
+    private final AuthorRepository authorRepository;
 
-    public BookServiceImpl(final BookRepository bookRepository)
+    public BookServiceImpl(final BookRepository bookRepository, final AuthorRepository authorRepository)
     {
         this.bookRepository = bookRepository;
+        this.authorRepository = authorRepository;
     }
-
 
     /**
      * Selects a book by id.
@@ -65,15 +67,36 @@ public class BookServiceImpl implements BookService
             throw new ConstraintsViolationException(message);
         }
         else {
-            JSONObject jsonObject = GoogleBooksAPIService.searchBookByIsbn(book.getIsbn10());
+            List<Author> authors = new ArrayList<Author>();
 
+            JSONObject jsonObject = GoogleBooksAPIService.searchBookByIsbn(book.getIsbn10());
             if(jsonObject != null && jsonObject.length() > 0) {
+
                 JSONArray items = (JSONArray) jsonObject.get("items");
                 book = GoogleBooksAPIService.parseBookWithBasicInfo((JSONObject) items.get(0));
 
                 JSONObject jsonVolume = GoogleBooksAPIService.searchBookByGoogleBooksId(book.getGoogleBooksId());
                 book = GoogleBooksAPIService.parseBook(jsonVolume);
+
+                List<Author> parsedAuthors = GoogleBooksAPIService.parseAuthors(jsonVolume);
+                for (Author parsedAuthor : parsedAuthors) {
+
+                    List<Author> authorsFound = authorRepository.findByName(parsedAuthor.getName());
+                    if(authorsFound != null && !authorsFound.isEmpty()) {
+                        authors.add(authorsFound.get(0));
+                    }
+                    else {
+                        try {
+                            Author newAuthor = authorRepository.save(parsedAuthor);
+                            authors.add(newAuthor);
+                        } catch (DataIntegrityViolationException e) {
+                            LOG.warn("Some constraints are thrown due to author creation", e);
+                            throw new ConstraintsViolationException(e.getMessage());
+                        }
+                    }
+                }
             }
+            book.setAuthors(authors);
 
             try {
                 newBook = bookRepository.save(book);

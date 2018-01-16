@@ -10,7 +10,9 @@ import java.util.List;
  */
 public interface AuthorRepository extends CrudRepository<Author, String>
 {
-    List<Author> findByNameAndSurname(String name, String surname);
+    List<Author> findByName(String name);
+
+    List<Author> findByNameLike(String name);
 
     List<Author> findAll();
 }

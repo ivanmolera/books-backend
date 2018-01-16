@@ -14,9 +14,6 @@ public class AuthorDTO
     @NotNull(message = "Name can not be null!")
     private String name;
 
-    @NotNull(message = "Surname can not be null!")
-    private String surname;
-
     private String country;
 
     private String language;
@@ -33,11 +30,10 @@ public class AuthorDTO
     }
 
 
-    public AuthorDTO(String id, String name, String surname, String country, String language, String biography, Date birthDate)
+    public AuthorDTO(String id, String name, String country, String language, String biography, Date birthDate)
     {
         this.id = id;
         this.name = name;
-        this.surname = surname;
         this.country = country;
         this.language = language;
         this.biography = biography;
@@ -56,10 +52,6 @@ public class AuthorDTO
 
     public String getName() {
         return name;
-    }
-
-    public String getSurname() {
-        return surname;
     }
 
     public String getCountry() {
@@ -83,7 +75,6 @@ public class AuthorDTO
     {
         private String id;
         private String name;
-        private String surname;
         private String country;
         private String language;
         private String biography;
@@ -100,13 +91,6 @@ public class AuthorDTO
         public AuthorDTOBuilder setName(String name)
         {
             this.name = name;
-            return this;
-        }
-
-
-        public AuthorDTOBuilder setSurname(String surname)
-        {
-            this.surname = surname;
             return this;
         }
 
@@ -141,7 +125,7 @@ public class AuthorDTO
 
         public AuthorDTO createAuthorDTO()
         {
-            return new AuthorDTO(id, name, surname, country, language, biography, birthDate);
+            return new AuthorDTO(id, name, country, language, biography, birthDate);
         }
 
     }

@@ -11,7 +11,7 @@ public class BookMapper
 {
     public static Book makeBook(BookDTO bookDTO)
     {
-        return new Book(bookDTO.getGoogleBooksId(), bookDTO.getIsbn10(), bookDTO.getIsbn13(), bookDTO.getTitle(), bookDTO.getSubtitle(), bookDTO.getDescription(), bookDTO.getLanguage(), bookDTO.getPageCount(), bookDTO.getAverageRating(), bookDTO.getCover(), bookDTO.getConditionType(), bookDTO.getPicture01(), bookDTO.getPicture02(), bookDTO.getPicture03());
+        return new Book(bookDTO.getGoogleBooksId(), bookDTO.getIsbn10(), bookDTO.getIsbn13(), bookDTO.getTitle(), bookDTO.getSubtitle(), bookDTO.getDescription(), bookDTO.getLanguage(), bookDTO.getPageCount(), bookDTO.getAverageRating(), bookDTO.getCover(), bookDTO.getConditionType(), bookDTO.getPicture01(), bookDTO.getPicture02(), bookDTO.getPicture03(), AuthorMapper.makeAuthorList(bookDTO.getAuthors()));
     }
 
     public static BookDTO makeBookDTO(Book book)
@@ -31,7 +31,8 @@ public class BookMapper
             .setConditionType(book.getConditionType())
             .setPicture01(book.getPicture01())
             .setPicture02(book.getPicture02())
-            .setPicture03(book.getPicture03());
+            .setPicture03(book.getPicture03())
+            .setAuthors(AuthorMapper.makeAuthorDTOList(book.getAuthors()));
 
         return bookDTOBuilder.createBookDTO();
     }

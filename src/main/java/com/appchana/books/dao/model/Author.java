@@ -12,7 +12,6 @@ public class Author
     @Id
     private String id;
     private String name;
-    private String surname;
     private String country;
     private String language;
     private String biography;
@@ -23,16 +22,14 @@ public class Author
     {
     }
 
-    public Author(String name, String surname)
+    public Author(String name)
     {
         this.name = name;
-        this.surname = surname;
     }
 
-    public Author(String name, String surname, String country, String language, String biography, Date birthDate)
+    public Author(String name, String country, String language, String biography, Date birthDate)
     {
         this.name = name;
-        this.surname = surname;
         this.country = country;
         this.language = language;
         this.biography = biography;
@@ -56,16 +53,6 @@ public class Author
 
     public void setName(String name) {
         this.name = name;
-    }
-
-
-    @NotNull(message = "Author surname can not be null!")
-    public String getSurname() {
-        return surname;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
     }
 
 

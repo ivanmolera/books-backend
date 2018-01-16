@@ -95,18 +95,19 @@ public class GoogleBooksAPIService {
             cover = (String) imageLinks.get("thumbnail");
         }
 
-        Book book = new Book(googleBooksId, isbn10, isbn13, title, subtitle, description, language, pageCount, averageRating, cover, ConditionType.NEW, null, null, null);
+        Book book = new Book(googleBooksId, isbn10, isbn13, title, subtitle, description, language, pageCount, averageRating, cover, ConditionType.NEW, null, null, null, null);
 
         return book;
     }
 
-    public static List<Author> parseAuthors(JSONObject volumeInfo)
+    public static List<Author> parseAuthors(JSONObject jsonObject)
     {
+        JSONObject volumeInfo = (JSONObject) jsonObject.get("volumeInfo");
         List<Author> authors = new ArrayList<Author>();
         if(volumeInfo.has("authors")) {
             JSONArray jsonObjectAuthors = (JSONArray) volumeInfo.get("authors");
             String authorName = (String) jsonObjectAuthors.get(0);
-            Author author = new Author(authorName, authorName);
+            Author author = new Author(authorName);
             authors.add(author);
         }
         return authors;
