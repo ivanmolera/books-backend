@@ -1,6 +1,7 @@
 package com.appchana.books.dto;
 
 import com.appchana.books.domainvalue.OnlineStatus;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import javax.validation.constraints.NotNull;
@@ -44,7 +45,7 @@ public class UserDTO
         return username;
     }
 
-    //@JsonIgnore
+    @JsonIgnore
     @NotNull(message = "Password can not be null!")
     public String getPassword()
     {
