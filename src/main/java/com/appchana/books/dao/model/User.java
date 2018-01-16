@@ -5,6 +5,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Document(collection = "users")
 public class User
@@ -16,25 +17,33 @@ public class User
     private Boolean deleted = false;
     private OnlineStatus onlineStatus;
 
+    private Contact contact;
+
+    // Referenced documents
+    private List<String> books;
+
     private User()
     {
     }
 
 
-    public User(String username, String password)
+    public User(String username, String password, Contact contact)
     {
         this.username = username;
         this.password = password;
         this.deleted = false;
         this.onlineStatus = OnlineStatus.OFFLINE;
+        this.contact = contact;
     }
 
-    public User(String username, String password, OnlineStatus onlineStatus)
+    public User(String username, String password, OnlineStatus onlineStatus, Contact contact, List<String> books)
     {
         this.username = username;
         this.password = password;
         this.deleted = false;
         this.onlineStatus = onlineStatus != null ? onlineStatus : OnlineStatus.OFFLINE;
+        this.contact = contact;
+        this.books = books;
     }
 
 
@@ -85,5 +94,23 @@ public class User
     public void setOnlineStatus(OnlineStatus onlineStatus)
     {
         this.onlineStatus = onlineStatus;
+    }
+
+
+    public Contact getContact() {
+        return contact;
+    }
+
+    public void setContact(Contact contact) {
+        this.contact = contact;
+    }
+
+
+    public List<String> getBooks() {
+        return books;
+    }
+
+    public void setBooks(List<String> books) {
+        this.books = books;
     }
 }

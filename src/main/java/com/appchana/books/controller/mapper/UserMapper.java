@@ -11,7 +11,7 @@ public class UserMapper
 {
     public static User makeUser(UserDTO userDTO)
     {
-        return new User(userDTO.getUsername(), userDTO.getPassword(), userDTO.getOnlineStatus());
+        return new User(userDTO.getUsername(), userDTO.getPassword(), userDTO.getOnlineStatus(), ContactMapper.makeContact(userDTO.getContact()), userDTO.getBooks());
     }
 
 
@@ -21,7 +21,9 @@ public class UserMapper
             .setId(user.getId())
             .setPassword(user.getPassword())
             .setUsername(user.getUsername())
-            .setOnlineStatus(user.getOnlineStatus());
+            .setOnlineStatus(user.getOnlineStatus())
+            .setContact(ContactMapper.makeContactDTO(user.getContact()))
+            .setBooks(user.getBooks());
 
         return userDTOBuilder.createUserDTO();
     }

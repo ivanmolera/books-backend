@@ -1,10 +1,12 @@
 package com.appchana.books.dto;
 
+import com.appchana.books.dao.model.Contact;
 import com.appchana.books.domainvalue.OnlineStatus;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserDTO
@@ -13,18 +15,23 @@ public class UserDTO
     private String username;
     private String password;
     private OnlineStatus onlineStatus;
+    private ContactDTO contact;
+
+    private List<String> books;
 
     private UserDTO()
     {
     }
 
 
-    private UserDTO(String id, String username, String password, OnlineStatus onlineStatus)
+    private UserDTO(String id, String username, String password, OnlineStatus onlineStatus, ContactDTO contact, List<String> books)
     {
         this.id = id;
         this.username = username;
         this.password = password;
         this.onlineStatus = onlineStatus;
+        this.contact = contact;
+        this.books = books;
     }
 
 
@@ -45,7 +52,7 @@ public class UserDTO
         return username;
     }
 
-    @JsonIgnore
+    //@JsonIgnore
     @NotNull(message = "Password can not be null!")
     public String getPassword()
     {
@@ -56,12 +63,22 @@ public class UserDTO
         return onlineStatus;
     }
 
+    public ContactDTO getContact() {
+        return contact;
+    }
+
+    public List<String> getBooks() {
+        return books;
+    }
+
     public static class UserDTOBuilder
     {
         private String id;
         private String username;
         private String password;
         private OnlineStatus onlineStatus;
+        private ContactDTO contact;
+        private List<String> books;
 
 
         public UserDTOBuilder setId(String id)
@@ -92,9 +109,23 @@ public class UserDTO
         }
 
 
+        public UserDTOBuilder setContact(ContactDTO contact)
+        {
+            this.contact = contact;
+            return this;
+        }
+
+
+        public UserDTOBuilder setBooks(List<String> books)
+        {
+            this.books = books;
+            return this;
+        }
+
+
         public UserDTO createUserDTO()
         {
-            return new UserDTO(id, username, password, onlineStatus);
+            return new UserDTO(id, username, password, onlineStatus, contact, books);
         }
 
     }
