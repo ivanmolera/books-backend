@@ -1,10 +1,12 @@
 package com.appchana.books.service.book;
 
 import com.appchana.books.common.Constants;
+import com.appchana.books.controller.mapper.BookMapper;
 import com.appchana.books.dao.AuthorRepository;
 import com.appchana.books.dao.BookRepository;
 import com.appchana.books.dao.model.Author;
 import com.appchana.books.dao.model.Book;
+import com.appchana.books.dto.BookDTO;
 import com.appchana.books.exception.ConstraintsViolationException;
 import com.appchana.books.exception.EntityNotFoundException;
 import com.appchana.books.exception.InvalidIdentifierException;
@@ -106,6 +108,19 @@ public class BookServiceImpl implements BookService
             }
         }
         return newBook;
+    }
+
+    public List<BookDTO> getUserBooks(List<String> booksList) throws EntityNotFoundException {
+        List<BookDTO> newBooksList = new ArrayList<BookDTO>();
+
+        for (String bookId : booksList) {
+            Book book = bookRepository.findOne(bookId);
+            if(book != null) {
+                newBooksList.add(BookMapper.makeBookDTO(book));
+            }
+        }
+
+        return newBooksList;
     }
 
     /**

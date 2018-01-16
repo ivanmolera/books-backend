@@ -38,8 +38,11 @@ public class AuthorMapper
 
     public static List<Author> makeAuthorList(Collection<AuthorDTO> authors)
     {
-        return authors.stream()
-                .map(AuthorMapper::makeAuthor)
-                .collect(Collectors.toList());
+        if(authors != null) {
+            return authors.stream()
+                    .map(AuthorMapper::makeAuthor)
+                    .collect(Collectors.toList());
+        }
+        return new ArrayList<Author>();
     }
 }

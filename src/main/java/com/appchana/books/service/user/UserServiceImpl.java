@@ -1,6 +1,7 @@
 package com.appchana.books.service.user;
 
 import com.appchana.books.dao.UserRepository;
+import com.appchana.books.dao.model.Book;
 import com.appchana.books.dao.model.User;
 import com.appchana.books.domainvalue.OnlineStatus;
 import com.appchana.books.exception.ConstraintsViolationException;
@@ -12,6 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -74,6 +76,29 @@ public class UserServiceImpl implements UserService
         return newUser;
     }
 
+    /**
+     * Updates a user.
+     *
+     * @param userId
+     * @param book
+     * @return
+     * @throws ConstraintsViolationException
+     */
+    public User insertUserBook(String userId, Book book) throws EntityNotFoundException, ConstraintsViolationException
+    {
+        User user = findUserChecked(userId);
+
+        List<String> booksList = user.getBooks();
+
+        if(booksList == null) booksList = new ArrayList<String>();
+        booksList.add(book.getId());
+
+        user.setBooks(booksList);
+        userRepository.save(user);
+
+        return user;
+    }
+
 
     /**
      * Deletes an existing user by id.
@@ -86,7 +111,6 @@ public class UserServiceImpl implements UserService
     public void delete(String id) throws EntityNotFoundException
     {
         User user = findUserChecked(id);
-        //user.setDeleted(true);
         userRepository.delete(user);
     }
 
