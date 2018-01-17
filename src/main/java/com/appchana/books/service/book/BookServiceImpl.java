@@ -10,11 +10,12 @@ import com.appchana.books.dto.BookDTO;
 import com.appchana.books.exception.ConstraintsViolationException;
 import com.appchana.books.exception.EntityNotFoundException;
 import com.appchana.books.exception.InvalidIdentifierException;
-import com.appchana.books.googlebooks.GoogleBooksAPIService;
+import com.appchana.books.externalservice.GoogleBooksAPIServiceImpl;
 import com.appchana.books.util.CheckISBN;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,10 +32,17 @@ public class BookServiceImpl implements BookService
     private final BookRepository bookRepository;
     private final AuthorRepository authorRepository;
 
+    private GoogleBooksAPIServiceImpl externalAPIService;
+
     public BookServiceImpl(final BookRepository bookRepository, final AuthorRepository authorRepository)
     {
         this.bookRepository = bookRepository;
         this.authorRepository = authorRepository;
+    }
+
+    @Autowired
+    public void setExternalAPIService(GoogleBooksAPIServiceImpl externalAPIService) {
+        this.externalAPIService = externalAPIService;
     }
 
     /**
@@ -60,54 +68,70 @@ public class BookServiceImpl implements BookService
     @Override
     public Book create(Book book) throws IOException, ConstraintsViolationException, InvalidIdentifierException
     {
-        Book newBook = null;
-
+        /*
         List<Book> booksList = this.findByISBN(CheckISBN.getISBN(book));
         if(booksList != null && !booksList.isEmpty()) {
             String message = "A book already exists with the given ISBN: " + book.getIsbn10();
             LOG.warn(message);
             throw new ConstraintsViolationException(message);
         }
-        else {
-            List<Author> authors = new ArrayList<Author>();
+        */
 
-            JSONObject jsonObject = GoogleBooksAPIService.searchBookByIsbn(book.getIsbn10());
-            if(jsonObject != null && jsonObject.length() > 0) {
+        book = updateBookFromExternalService(book);
 
-                JSONArray items = (JSONArray) jsonObject.get("items");
-                book = GoogleBooksAPIService.parseBookWithBasicInfo((JSONObject) items.get(0));
+        try {
+            return bookRepository.save(book);
+        } catch (DataIntegrityViolationException e) {
+            LOG.warn("Some constraints are thrown due to book creation", e);
+            throw new ConstraintsViolationException(e.getMessage());
+        }
+    }
 
-                JSONObject jsonVolume = GoogleBooksAPIService.searchBookByGoogleBooksId(book.getGoogleBooksId());
-                book = GoogleBooksAPIService.parseBook(jsonVolume);
+    private Book updateBookFromExternalService(Book book) throws IOException, ConstraintsViolationException
+    {
+        List<Author> authors = new ArrayList<Author>();
 
-                List<Author> parsedAuthors = GoogleBooksAPIService.parseAuthors(jsonVolume);
+        JSONObject jsonObject = externalAPIService.searchBookByIsbn(book.getIsbn10());
+
+        if(jsonObject != null && jsonObject.length() > 0) {
+
+            JSONArray items = (JSONArray) jsonObject.get("items");
+            book = externalAPIService.parseBookWithBasicInfo((JSONObject) items.get(0));
+
+            JSONObject jsonVolume = new JSONObject();
+            if(book.getGoogleBooksId() != null && !book.getGoogleBooksId().isEmpty()) {
+                jsonVolume = externalAPIService.getBookByGoogleBooksId(book.getGoogleBooksId());
+                book = externalAPIService.parseBook(jsonVolume);
+            }
+
+            if(jsonVolume != null && jsonVolume.length() > 0) {
+                List<Author> parsedAuthors = externalAPIService.parseAuthors(jsonVolume);
                 for (Author parsedAuthor : parsedAuthors) {
 
                     List<Author> authorsFound = authorRepository.findByName(parsedAuthor.getName());
-                    if(authorsFound != null && !authorsFound.isEmpty()) {
+                    if (authorsFound != null && !authorsFound.isEmpty()) {
                         authors.add(authorsFound.get(0));
-                    }
-                    else {
-                        try {
-                            Author newAuthor = authorRepository.save(parsedAuthor);
-                            authors.add(newAuthor);
-                        } catch (DataIntegrityViolationException e) {
-                            LOG.warn("Some constraints are thrown due to author creation", e);
-                            throw new ConstraintsViolationException(e.getMessage());
-                        }
+                    } else {
+                        Author newAuthor = saveParsedAuthor(parsedAuthor);
+                        authors.add(newAuthor);
                     }
                 }
             }
-            book.setAuthors(authors);
-
-            try {
-                newBook = bookRepository.save(book);
-            } catch (DataIntegrityViolationException e) {
-                LOG.warn("Some constraints are thrown due to book creation", e);
-                throw new ConstraintsViolationException(e.getMessage());
-            }
         }
-        return newBook;
+        book.setAuthors(authors);
+
+        return book;
+    }
+
+    private Author saveParsedAuthor(Author parsedAuthor) throws ConstraintsViolationException
+    {
+        try {
+            return authorRepository.save(parsedAuthor);
+        }
+        catch (DataIntegrityViolationException e) {
+            LOG.warn("Some constraints are thrown due to author creation", e);
+            throw new ConstraintsViolationException(e.getMessage());
+        }
     }
 
     public List<BookDTO> getUserBooks(List<String> booksList) throws EntityNotFoundException {

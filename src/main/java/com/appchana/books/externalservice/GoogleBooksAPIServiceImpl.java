@@ -1,4 +1,4 @@
-package com.appchana.books.googlebooks;
+package com.appchana.books.externalservice;
 
 import com.appchana.books.common.Constants;
 import com.appchana.books.dao.model.Author;
@@ -7,6 +7,7 @@ import com.appchana.books.util.JsonReader;
 import com.appchana.books.dao.model.Book;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -15,19 +16,22 @@ import java.util.List;
 /**
  * Created by ivanmolera on 21/12/2017.
  */
-public class GoogleBooksAPIService {
+@Service
+public class GoogleBooksAPIServiceImpl implements ExternalAPIService {
 
-    public static JSONObject searchBookByIsbn(String isbn) throws IOException {
+    @Override
+    public JSONObject searchBookByIsbn(String isbn) throws IOException {
         String url = Constants.GOOGLEBOOKS_API_QUERY_VOLUME_URL + Constants.GOOGLEBOOKS_API_ISBN_PARAM + isbn + Constants.GOOGLEBOOKS_API_VOLUME_BASIC_INFO;
         return JsonReader.readJsonFromUrl(url);
     }
 
-    public static JSONObject searchBookByGoogleBooksId(String googleBooksId) throws IOException {
+    public JSONObject getBookByGoogleBooksId(String googleBooksId) throws IOException {
         String url = Constants.GOOGLEBOOKS_API_SINGLE_VOLUME_URL + googleBooksId + Constants.GOOGLEBOOKS_API_KEY_PARAM + Constants.GOOGLEBOOKS_API_VOLUME_EXTENDED_INFO;
         return JsonReader.readJsonFromUrl(url);
     }
 
-    public static Book parseBookWithBasicInfo(JSONObject jsonObject)
+    @Override
+    public Book parseBookWithBasicInfo(JSONObject jsonObject)
     {
         String googleBooksId  = (String) jsonObject.get("id");
 
@@ -38,7 +42,8 @@ public class GoogleBooksAPIService {
         return new Book(googleBooksId, title);
     }
 
-    public static Book parseBook(JSONObject jsonObject)
+    @Override
+    public Book parseBook(JSONObject jsonObject)
     {
         String googleBooksId  = (String) jsonObject.get("id");
 
@@ -100,7 +105,8 @@ public class GoogleBooksAPIService {
         return book;
     }
 
-    public static List<Author> parseAuthors(JSONObject jsonObject)
+    @Override
+    public List<Author> parseAuthors(JSONObject jsonObject)
     {
         JSONObject volumeInfo = (JSONObject) jsonObject.get("volumeInfo");
         List<Author> authors = new ArrayList<Author>();
